@@ -1,30 +1,47 @@
-import java.awt.image.*;
-import GraphPackage.*;
-import ADTPackage.*;
-/**An implementation of a profile manager on a simple social network.
- * @author Jesse Grabowski
- * @author Joseph Erickson
- * @version 5.0 */
-public class ProfileManager
-{
-    private UndirectedGraph<Profile> allProfiles;
-    /** Constructor for an instance of a profile manager. */
-    public ProfileManager()
-    {
-        allProfiles = new UndirectedGraph<>();
-    } // end default constructor
-    /** Adds a profile to the social network.@param p  The profile to be added to the network. */
-    public void addProfile(Profile p)
-    {
+import java.util.Observable;
+
+public class ProfileManager extends java.util.Observable {
+    //Holds all of profiles
+    private Graph allProfiles;
+
+    public ProfileManager(){
+        allProfiles = new Graph();
+    }
+
+    public void addProfile(ProfileModel p){
         allProfiles.addVertex(p);
-    } // end addProfile
-    public void createFriendship(Profile a, Profile b)
-    {
+    }
 
-    } // end createFriendship
+    /**
+     * Removes all edges connected to vertex and then removes vertex
+     * @param p the vertex
+     * */
+    public void removeProfile(ProfileModel p){
+        for(ProfileModel u: allProfiles.getAdjVertices(p)){
+            this.allProfiles.removeEdge(p, u);
+        }
+
+        this.allProfiles.removeVertex(p);
+
+    }
+
+    public ProfileModel searchProfile(String name){
+        ProfileModel v = new ProfileModel();
+
+        for(ProfileModel u : allProfiles.getAllVertices()){
+            if(u.getName().equals(name))
+                 return u.getProfile(u);
+        }
+        return v;
+    }
+
+    public void createFriendship(ProfileModel user, ProfileModel friend) {
+        allProfiles.addEdge(user, friend);
+    }
+
+
     /** Displays each profile's information and friends. */
-    public void display(Profile startPoint)
-    {
-
-    } // end display
-} // end ProfileManager
+    public Iterable<ProfileModel> getFriendList(ProfileModel startPoint) {
+        return this.allProfiles.getNeighbors(startPoint);
+    }
+}
