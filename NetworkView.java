@@ -14,6 +14,51 @@ public class NetworkView implements Observer {
         model.addObserver(this);
     }
 
+    public void LoginView() {
+        final int WINDOW_WIDTH = 750;
+        final int WINDOW_HEIGHT = 750;
+        //Create a login window
+        JFrame loginWindow = new JFrame();
+        //Set the title
+        loginWindow.setTitle("MockFB");
+        //Set the size of the window
+        loginWindow.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        //Specify what when the close button is clicked
+        loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Create login instructions label
+        JLabel instructionLabel = new JLabel("Create A Profile To Join Network");
+        instructionLabel.setBounds(270,150,215,20);
+        //Create name label
+        JLabel nameLabel = new JLabel("Name");
+        nameLabel.setBounds(270,200,80,25);
+        //Create login text field 10 characters wide
+        JTextField nameTextField = new JTextField(10);
+        nameTextField.setBounds(308,200,165,25);
+        //Create image label
+        JLabel imageLabel = new JLabel("Select Image:");
+        imageLabel.setBounds(270, 228, 175, 25);
+        //Create login button with caption
+        JButton joinButton = new JButton("Join");
+        joinButton.setBounds(270, 275, 100, 25);
+        //Create select image file button
+        JFileChooser fileButton = new JFileChooser();
+        fileButton.setBounds(370, 228, 700, 700);
+        //Create JPanel object to reference labels
+        JPanel loginPanel = new JPanel();
+        loginPanel.setLayout(null);
+        //Add labels to panel
+        loginPanel.add(instructionLabel);
+        loginPanel.add(nameLabel);
+        loginPanel.add(nameTextField);
+        loginPanel.add(imageLabel);
+        loginPanel.add(joinButton);
+        loginPanel.add(fileButton);
+        //Add panel to login window
+        loginWindow.add(loginPanel);
+        //Display the login window
+        loginWindow.setVisible(true);
+    }
+
     public void createAndShowGUI(){
         JFrame frame = new HandleActionEventsForJButton();
 
@@ -65,7 +110,6 @@ public class NetworkView implements Observer {
             add(addButton);
             add(joinButton);
             add(leaveButton);
-
 
         }
 
