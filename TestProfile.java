@@ -9,7 +9,6 @@ public class TestProfile
         //ProfileManager manager = new ProfileManager();
 
         //TEST CASE: Print out friend list
-        //manager.buildFriends();
         View view = new View(model);
 
 

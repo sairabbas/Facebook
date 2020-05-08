@@ -1,12 +1,8 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.concurrent.Flow;
 
 
 public class View{
@@ -28,15 +24,9 @@ public class View{
         //Create frame that takes button method
         JFrame frame = new HandleActionEventsForJButton();
 
-
         //Build friend list panel
         JLabel label = new JLabel("Friends List");
         buildFriendListPanel();
-
-
-
-
-
 
         //Box for friend list
         Box bv = Box.createVerticalBox();
@@ -45,9 +35,7 @@ public class View{
 
         //Add components to frame
         frame.add(bv, BorderLayout.EAST);
-
-        //TODO: HAVE FRIEND LIST ON THE EAST
-        //TODO: HAVE LOOKING AT FRIENDS ON THE CENTER
+        frame.add(mainPanel, BorderLayout.CENTER);
 
         //Display the window
         frame.pack();
@@ -105,7 +93,7 @@ public class View{
      * Displays friend's info and their relationships. Has search field
      * */
     public void buildMainPanel(){
-        mainPanel = new JPanel();
+        //mainPanel = new JPanel(new BorderLayout());
         JLabel searchLabel = new JLabel("Search:");
         JTextField searchText = new JTextField(10);
 
@@ -116,6 +104,7 @@ public class View{
         Box bh = Box.createHorizontalBox();
         bh.add(searchLabel);
         bh.add(searchText);
+        mainPanel.add(bh, BorderLayout.SOUTH);
     }
 
     /**
@@ -123,36 +112,68 @@ public class View{
      * */
     public void buildFriendListPanel(){
         friendListPanel = new JPanel();
-        ArrayList<Database> f = buildFriends(); //Gets a sample of friends
+        mainPanel = new JPanel();
+        buildFriends(); //Gets a sample of friends
+        ArrayList<Database> f = model.getFriends();
         //TODO:Make every friend a button
-        Box bv = Box.createVerticalBox();       //Makes things vertically aligned
+        Box bv = Box.createVerticalBox();       //Create box for friend list
+        Box bv2 = Box.createVerticalBox();      //Create box friend's friend list
+        JButton button;                         //Button for friend name
         for(int i = 0; i < f.size(); i++){
-            JButton button = new JButton(f.get(i).getName()); //A button with a name
+            button = new JButton(f.get(i).getName()); //A button with a name
             bv.add(button);                                   //Adds button vertically
-        }
-        //TODO:When you click on a friend, show their info
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {                        //Button pressed gives user info
+                    String action = e.getActionCommand();
+                    for(int i = 0; i < model.friendDatabases.size(); i++){          //Loops thru whole database (IN PROGRESS)
+                        if(action.equals(model.friendDatabases.get(i).getName())){  //Check if button name == a name in database
+                            Database d = model.getProfile(model.friendDatabases.get(i)); //Get Profile object
+                            JPanel friendProfile = new JPanel();                    //Create panel
+                            JLabel name = new JLabel(d.getName());                  //Create name label
+                            JLabel status = new JLabel(d.getStatus());              //Create status label
 
+                            //TESTING
+                            System.out.println("Friend: " + d.getName());
+
+                            for(int j = 0; j < d.friendDatabases.size(); j++){      //Get friend's friend list
+                                JButton fButton = new JButton(d.friendDatabases.get(j).getName()); //Button for friend's friend name
+                                bv2.add(fButton);
+                                //TESTING
+                                System.out.println("Friend of Friend:" + d.friendDatabases.get(i).getName());
+                            }
+                            mainPanel.add(name);
+                            mainPanel.add(status);
+                        }
+                    }
+                }
+            });
+        }
+
+        //TODO:When you click on a friend, show their info
         //Add buttons to panel
         friendListPanel.add(bv);
+        mainPanel.add(bv2);
     }
 
-    public ArrayList<Database> buildFriends(){
+    public void buildFriends(){
         ArrayList<Database> friends = new ArrayList<>();
 
         //Create friends
-        for(int i = 0; i < 5; i++)
-        {
+        for(int i = 0; i < 5; i++) {
             friends.add(new Database());
             friends.get(i).setName("Daniel", "Tran #" + i);
             friends.get(i).setStatus("online");
         }
 
-        return friends;
+        //Add friends of Daniel Tran #1
+        model.addFriend(friends.get(1)); //DT0, DT1
+        model.addFriend(friends.get(2)); //DT0, DT2
     }
 
     public class HandleActionEventsForJButton extends JFrame implements ActionListener{
 
-        public HandleActionEventsForJButton() {
+        HandleActionEventsForJButton() {
             //Set flow layout for the frame
             this.getContentPane().setLayout(new BorderLayout(10, 5)); //hGap, vGap
             //buildUserPanel();
@@ -162,7 +183,7 @@ public class View{
             JLabel lastName = new JLabel("Last Name: ");
             JLabel status = new JLabel("Status: ");
 
-            //Build the profile picze
+            //Build the profile pic
             ImageIcon img = new ImageIcon(model.getProfilePicture());
             Image scaleImg = img.getImage().getScaledInstance(50,50, Image.SCALE_DEFAULT);
             ImageIcon newImg = new ImageIcon(scaleImg);

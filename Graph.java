@@ -92,7 +92,6 @@ public class Graph {
         }
     }
 
-
     public void hasEdge(Database p1, Database p2)
     {
         if (map.get(p1).contains(p2)) {
@@ -120,7 +119,6 @@ public class Graph {
                 }
             }
         }
-
         return visited;
     }
 
