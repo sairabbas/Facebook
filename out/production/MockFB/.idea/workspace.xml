@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="60e7c14a-cf4c-4be6-8dbe-be4195b9d321" name="Default Changelist" comment="" />
+    <list default="true" id="463a8b67-01e1-4d2e-af61-a4e4db9db5a2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/View.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1bbk3eyG1Y2mWRL8yPmNMjsKEGW" />
+  <component name="PropertiesComponent">
+    <property name="restartRequiresConfirmation" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="TestProfile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TestProfile" />
@@ -25,28 +52,15 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
-  <component name="TaskManager">
-    <servers />
-  </component>
-  <component name="WindowStateProjectService">
-    <state width="1398" height="210" key="GridCell.Tab.0.bottom" timestamp="1588813112285">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="1398" height="210" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1588813112285" />
-    <state width="1398" height="210" key="GridCell.Tab.0.center" timestamp="1588813112285">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="1398" height="210" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1588813112285" />
-    <state width="1398" height="210" key="GridCell.Tab.0.left" timestamp="1588813112284">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="1398" height="210" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1588813112284" />
-    <state width="1398" height="210" key="GridCell.Tab.0.right" timestamp="1588813112285">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="1398" height="210" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1588813112285" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
