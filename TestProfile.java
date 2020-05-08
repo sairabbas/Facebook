@@ -6,12 +6,9 @@ public class TestProfile
     public static void main(String[] args)
     {
         Database model = new Database();
-        //ProfileManager manager = new ProfileManager();
 
-        //TEST CASE: Print out friend list
+        //Run GUI
         View view = new View(model);
-
-
     }
 }
 

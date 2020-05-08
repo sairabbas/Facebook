@@ -137,14 +137,14 @@ public class View{
                  * @param e the button pressed
                  * */
                 @Override
-                public void actionPerformed(ActionEvent e) {                                        //Button pressed gives user info
+                public void actionPerformed(ActionEvent e) {                     //Button pressed gives user info
                     String action = e.getActionCommand();
-                    String friendName = manager.searchProfile(action).getName();                    //Friend Name
-                    String s = manager.searchProfile(action).getStatus();                           //Friend status
-                    int totalProfiles = manager.getProfilesCount();                                 //Total number of profiles
+                    String friendName = manager.searchProfile(action).getName(); //Friend Name
+                    String s = manager.searchProfile(action).getStatus();        //Friend status
+                    int totalProfiles = manager.getProfilesCount();              //Total number of profiles
 
-                    JLabel name = new JLabel("Name: " + friendName);                           //Friend name label
-                    JLabel status = new JLabel("Status: " + s + "\n");                         //Friend status label
+                    JLabel name = new JLabel("Name: " + friendName);        //Friend name label
+                    JLabel status = new JLabel("Status: " + s + "\n");      //Friend status label
 
                     //Add to panel
                     mainPanel.add(name, BorderLayout.CENTER);
@@ -152,57 +152,25 @@ public class View{
 
                     System.out.println("Currently viewing: " + friendName);
 
-                    int friendTotal = manager.getFriendList(manager.searchProfile(friendName)).size(); //Total number of friends your friend has
+                    //Total number of friends your friend has
+                    int friendTotal = manager.searchProfile(friendName).friendDatabases.size();
 
                     //Create friend's friend list
                     JLabel theirFriendList = new JLabel(friendName + "'s Friends List");
                     bv2.add(theirFriendList);
 
-                    //Make button for every friend
+                    //Make button for every friend if they have any
                     if(friendTotal > 0){
                         for (int i = 0; i < friendTotal; i++) {
-                            JButton fButton = new JButton(manager.getFriendList(manager.searchProfile(friendName)).get(i).getName()); //Button for friend's friend name
+                            String friendsFriendName = manager.searchProfile(friendName).friendDatabases.get(i).getName();
+                            JButton fButton =  new JButton(friendsFriendName);        //Button for friend's friend name
                             bv2.add(fButton);
-                            //TESTING
-                            //System.out.println("Friend of Friend:" + d.friendDatabases.get(j).getName());
+                            System.out.println("Friend of Friend:" + friendsFriendName);
                         }
                     }
                     else
                         bv2.add(new JLabel("Currently has no friends."));
-
-                    /*
-                    for (int i = 0; i < totalProfiles; i++) {                                       //Loops thru whole database (IN PROGRESS)
-
-                        if (action.equals(friendName)) {                                            //Check if button name is a name in database
-                            Database d = model.getProfile(model.friendDatabases.get(i));            //Create profile obj to hold data
-                            String fn = d.getName();
-
-                            mainPanel.add(name, BorderLayout.CENTER);                               //Adds name to panel
-                            mainPanel.add(status, BorderLayout.CENTER);                             //Adds status to panel
-
-                            //TESTING
-                            System.out.println("You have clicked on " + fn);
-
-                            //Make friend's friend list
-                            JLabel theirFriendList = new JLabel(fn + "'s Friends List");        //Label for friend's friend list
-                            bv2.add(theirFriendList);                                                //Add label to Box
-                            if(d.friendDatabases.size() > 0){
-                                for (int j = 0; j < d.friendDatabases.size(); j++) {
-                                    JButton fButton = new JButton(d.friendDatabases.get(j).getName()); //Button for friend's friend name
-                                    bv2.add(fButton);
-                                    //TESTING
-                                    //System.out.println("Friend of Friend:" + d.friendDatabases.get(j).getName());
-                                }
-                            }
-                            else
-                                bv2.add(new JLabel("Currently has no friends."));
-                        }
-                    }
-
-                     */
                 }
-
-
             });
         }
 
@@ -257,6 +225,14 @@ public class View{
         manager.createFriendship(d3, d4); //Josh --- Alexis
         manager.createFriendship(d4, d2); //Alexis --- Sair
 
+        System.out.println("Total Profiles: " + manager.getProfilesCount());
+        System.out.println("Expected: 4 \n");
+
+        System.out.println("Total Friends of Daniel: "
+                + manager.searchProfile("Daniel Tran").getFriends().size());
+        System.out.println("Expected: 2");
+
+
 
     }
 
@@ -264,8 +240,7 @@ public class View{
 
         HandleActionEventsForJButton() {
             //Set flow layout for the frame
-            this.getContentPane().setLayout(new BorderLayout(10, 5)); //hGap, vGap
-            //buildUserPanel();
+            this.getContentPane().setLayout(new BorderLayout(10, 5)); //hGap, vGap;
 
             //Build the labels
             JLabel firstName = new JLabel("First Name: ");
