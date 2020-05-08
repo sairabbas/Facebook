@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class View{
 
     private Database model;
+    private ProfileManager manager;
     private JPanel mainPanel;
     private JPanel friendListPanel; //A panel to hold friend's list
 
@@ -18,6 +19,7 @@ public class View{
      * */
     public View(Database model){
         this.model = model;
+        this.manager = new ProfileManager();
         int WINDOW_WIDTH = 780;
         int WINDOW_HEIGHT = 400;
 
@@ -93,7 +95,7 @@ public class View{
      * Displays friend's info and their relationships. Has search field
      * */
     public void buildMainPanel(){
-        //mainPanel = new JPanel(new BorderLayout());
+        mainPanel = new JPanel(new BorderLayout());
         JLabel searchLabel = new JLabel("Search:");
         JTextField searchText = new JTextField(10);
 
@@ -104,7 +106,7 @@ public class View{
         Box bh = Box.createHorizontalBox();
         bh.add(searchLabel);
         bh.add(searchText);
-        mainPanel.add(bh, BorderLayout.SOUTH);
+        //mainPanel.add(bh, BorderLayout.SOUTH);
     }
 
     /**
@@ -112,63 +114,150 @@ public class View{
      * */
     public void buildFriendListPanel(){
         friendListPanel = new JPanel();
-        mainPanel = new JPanel();
-        buildFriends(); //Gets a sample of friends
-        ArrayList<Database> f = model.getFriends();
+        mainPanel = new JPanel(new BorderLayout());
+
+        buildFriends();                             //Gets a sample of friends
+        ArrayList<Database> f = model.getFriends(); //List of user's friends
         //TODO:Make every friend a button
         Box bv = Box.createVerticalBox();       //Create box for friend list
         Box bv2 = Box.createVerticalBox();      //Create box friend's friend list
         JButton button;                         //Button for friend name
-        for(int i = 0; i < f.size(); i++){
-            button = new JButton(f.get(i).getName()); //A button with a name
+        /**
+         * When friend button is pressed, it gives adds their info into a JPanel.
+         * The JPanel has name, status, and their friend's list
+         * @param e the button pressed
+         * */
+        for (Database database : f) {                         //Each database obj is f(i)
+            button = new JButton(database.getName());         //A button with a name
             bv.add(button);                                   //Adds button vertically
             button.addActionListener(new ActionListener() {
+                /**
+                 * When friend button is pressed, it gives adds their info into a JPanel.
+                 * The JPanel has name, status, and their friend's list
+                 * @param e the button pressed
+                 * */
                 @Override
-                public void actionPerformed(ActionEvent e) {                        //Button pressed gives user info
+                public void actionPerformed(ActionEvent e) {                                        //Button pressed gives user info
                     String action = e.getActionCommand();
-                    for(int i = 0; i < model.friendDatabases.size(); i++){          //Loops thru whole database (IN PROGRESS)
-                        if(action.equals(model.friendDatabases.get(i).getName())){  //Check if button name == a name in database
-                            Database d = model.getProfile(model.friendDatabases.get(i)); //Get Profile object
-                            JPanel friendProfile = new JPanel();                    //Create panel
-                            JLabel name = new JLabel(d.getName());                  //Create name label
-                            JLabel status = new JLabel(d.getStatus());              //Create status label
+                    String friendName = manager.searchProfile(action).getName();                    //Friend Name
+                    String s = manager.searchProfile(action).getStatus();                           //Friend status
+                    int totalProfiles = manager.getProfilesCount();                                 //Total number of profiles
 
+                    JLabel name = new JLabel("Name: " + friendName);                           //Friend name label
+                    JLabel status = new JLabel("Status: " + s + "\n");                         //Friend status label
+
+                    //Add to panel
+                    mainPanel.add(name, BorderLayout.CENTER);
+                    mainPanel.add(status, BorderLayout.CENTER);
+
+                    System.out.println("Currently viewing: " + friendName);
+
+                    int friendTotal = manager.getFriendList(manager.searchProfile(friendName)).size(); //Total number of friends your friend has
+
+                    //Create friend's friend list
+                    JLabel theirFriendList = new JLabel(friendName + "'s Friends List");
+                    bv2.add(theirFriendList);
+
+                    //Make button for every friend
+                    if(friendTotal > 0){
+                        for (int i = 0; i < friendTotal; i++) {
+                            JButton fButton = new JButton(manager.getFriendList(manager.searchProfile(friendName)).get(i).getName()); //Button for friend's friend name
+                            bv2.add(fButton);
                             //TESTING
-                            System.out.println("Friend: " + d.getName());
-
-                            for(int j = 0; j < d.friendDatabases.size(); j++){      //Get friend's friend list
-                                JButton fButton = new JButton(d.friendDatabases.get(j).getName()); //Button for friend's friend name
-                                bv2.add(fButton);
-                                //TESTING
-                                System.out.println("Friend of Friend:" + d.friendDatabases.get(i).getName());
-                            }
-                            mainPanel.add(name);
-                            mainPanel.add(status);
+                            //System.out.println("Friend of Friend:" + d.friendDatabases.get(j).getName());
                         }
                     }
+                    else
+                        bv2.add(new JLabel("Currently has no friends."));
+
+                    /*
+                    for (int i = 0; i < totalProfiles; i++) {                                       //Loops thru whole database (IN PROGRESS)
+
+                        if (action.equals(friendName)) {                                            //Check if button name is a name in database
+                            Database d = model.getProfile(model.friendDatabases.get(i));            //Create profile obj to hold data
+                            String fn = d.getName();
+
+                            mainPanel.add(name, BorderLayout.CENTER);                               //Adds name to panel
+                            mainPanel.add(status, BorderLayout.CENTER);                             //Adds status to panel
+
+                            //TESTING
+                            System.out.println("You have clicked on " + fn);
+
+                            //Make friend's friend list
+                            JLabel theirFriendList = new JLabel(fn + "'s Friends List");        //Label for friend's friend list
+                            bv2.add(theirFriendList);                                                //Add label to Box
+                            if(d.friendDatabases.size() > 0){
+                                for (int j = 0; j < d.friendDatabases.size(); j++) {
+                                    JButton fButton = new JButton(d.friendDatabases.get(j).getName()); //Button for friend's friend name
+                                    bv2.add(fButton);
+                                    //TESTING
+                                    //System.out.println("Friend of Friend:" + d.friendDatabases.get(j).getName());
+                                }
+                            }
+                            else
+                                bv2.add(new JLabel("Currently has no friends."));
+                        }
+                    }
+
+                     */
                 }
+
+
             });
         }
 
         //TODO:When you click on a friend, show their info
         //Add buttons to panel
         friendListPanel.add(bv);
-        mainPanel.add(bv2);
+        mainPanel.add(bv2, BorderLayout.CENTER);
     }
 
+    /**
+     * Makes profiles and friends to test out program.
+     * Currently idoes not use graphs to add/friend. Uses ArrayList.
+     * */
     public void buildFriends(){
-        ArrayList<Database> friends = new ArrayList<>();
+        //Make users
+        Database d1 = new Database(); //Daniel
+        Database d2 = new Database(); //Sair
+        Database d3 = new Database(); //Josh
+        Database d4 = new Database(); //Alexis
 
-        //Create friends
-        for(int i = 0; i < 5; i++) {
-            friends.add(new Database());
-            friends.get(i).setName("Daniel", "Tran #" + i);
-            friends.get(i).setStatus("online");
-        }
+        //Set up their profile
+        d1.setName("Daniel", "Tran");
+        d2.setName("Sair", "Abbas");
+        d3.setName("Josh", "Sjah");
+        d4.setName("Alexis", "Arroyo");
 
-        //Add friends of Daniel Tran #1
-        model.addFriend(friends.get(1)); //DT0, DT1
-        model.addFriend(friends.get(2)); //DT0, DT2
+        d1.setStatus("online");
+        d2.setStatus("still here (dog)");
+        d3.setStatus("playing ms");
+        d4.setStatus("offline");
+
+        //Add friends
+        d1.addFriend(d2); //Daniel x Sair lmao
+        d1.addFriend(d3); //Daniel x Josh
+        d3.addFriend(d4); //Josh x Alexis
+        d4.addFriend(d3); //Alexis x Josh
+
+        //Add them to database
+        model.addFriend(d1);
+        model.addFriend(d2);
+        model.addFriend(d3);
+        model.addFriend(d4);
+
+        //Add them to graph
+        manager.addProfile(d1);
+        manager.addProfile(d2);
+        manager.addProfile(d3);
+        manager.addProfile(d4);
+
+        manager.createFriendship(d1, d2); //Daniel --- Sair
+        manager.createFriendship(d1, d3); //Daniel --- Josh
+        manager.createFriendship(d3, d4); //Josh --- Alexis
+        manager.createFriendship(d4, d2); //Alexis --- Sair
+
+
     }
 
     public class HandleActionEventsForJButton extends JFrame implements ActionListener{

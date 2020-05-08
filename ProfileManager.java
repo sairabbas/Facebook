@@ -3,9 +3,11 @@ import java.util.ArrayList;
 public class ProfileManager{
     //Holds all of profiles
     private Graph allProfiles;
+    private ArrayList<Database> friendList;
 
     public ProfileManager(){
         allProfiles = new Graph();
+        friendList = new ArrayList<>();
     }
 
     public void addProfile(Database p){
@@ -25,6 +27,10 @@ public class ProfileManager{
 
     }
 
+    public int getProfilesCount(){
+        return allProfiles.getVertexCount();
+    }
+
     public Database searchProfile(String name){
         Database v = new Database();
 
@@ -41,8 +47,15 @@ public class ProfileManager{
 
 
     /** Displays each profile's information and friends. */
+    /*
     public Iterable<Database> getFriendList(Database startPoint) {
         return this.allProfiles.getNeighbors(startPoint);
+    }
+
+     */
+    public ArrayList<Database> getFriendList(Database startPoint) {
+        friendList = (ArrayList<Database>) this.allProfiles.getAdjVertices(startPoint);
+        return friendList;
     }
 
 }

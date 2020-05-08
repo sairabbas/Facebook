@@ -48,10 +48,9 @@ public class Graph {
         return map.get(new Database());
     }
 
-    public void getVertexCount(){
-        System.out.println("The graph has "
-                + map.keySet().size()
-                + " vertex");
+    public int getVertexCount(){
+        return map.keySet().size();
+
     }
 
     public void getEdgesCount(boolean bidirection)
