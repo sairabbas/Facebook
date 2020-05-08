@@ -1,13 +1,17 @@
+import java.util.ArrayList;
+
 public class TestProfile
 {
+
     public static void main(String[] args)
     {
-        ProfileModel model = new ProfileModel();
-        ProfileManager manager = new ProfileManager();
-        NetworkView view = new NetworkView(model);
+        Database model = new Database();
+        //ProfileManager manager = new ProfileManager();
 
+        //TEST CASE: Print out friend list
+        //manager.buildFriends();
+        View view = new View(model);
 
-        javax.swing.SwingUtilities.invokeLater(view::createAndShowGUI);
 
     }
 }

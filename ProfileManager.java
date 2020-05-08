@@ -1,6 +1,6 @@
-import java.util.Observable;
+import java.util.ArrayList;
 
-public class ProfileManager extends java.util.Observable {
+public class ProfileManager{
     //Holds all of profiles
     private Graph allProfiles;
 
@@ -8,7 +8,7 @@ public class ProfileManager extends java.util.Observable {
         allProfiles = new Graph();
     }
 
-    public void addProfile(ProfileModel p){
+    public void addProfile(Database p){
         allProfiles.addVertex(p);
     }
 
@@ -16,8 +16,8 @@ public class ProfileManager extends java.util.Observable {
      * Removes all edges connected to vertex and then removes vertex
      * @param p the vertex
      * */
-    public void removeProfile(ProfileModel p){
-        for(ProfileModel u: allProfiles.getAdjVertices(p)){
+    public void removeProfile(Database p){
+        for(Database u: allProfiles.getAdjVertices(p)){
             this.allProfiles.removeEdge(p, u);
         }
 
@@ -25,23 +25,24 @@ public class ProfileManager extends java.util.Observable {
 
     }
 
-    public ProfileModel searchProfile(String name){
-        ProfileModel v = new ProfileModel();
+    public Database searchProfile(String name){
+        Database v = new Database();
 
-        for(ProfileModel u : allProfiles.getAllVertices()){
+        for(Database u : allProfiles.getAllVertices()){
             if(u.getName().equals(name))
                  return u.getProfile(u);
         }
         return v;
     }
 
-    public void createFriendship(ProfileModel user, ProfileModel friend) {
+    public void createFriendship(Database user, Database friend) {
         allProfiles.addEdge(user, friend);
     }
 
 
     /** Displays each profile's information and friends. */
-    public Iterable<ProfileModel> getFriendList(ProfileModel startPoint) {
+    public Iterable<Database> getFriendList(Database startPoint) {
         return this.allProfiles.getNeighbors(startPoint);
     }
+
 }

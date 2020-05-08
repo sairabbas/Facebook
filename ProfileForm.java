@@ -1,13 +1,10 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
-public class ProfileForm implements Observer {
+public class ProfileForm{
 
-    ProfileModel model;
+    Database model;
     JFrame f;
     JPanel panel;
 
@@ -15,9 +12,8 @@ public class ProfileForm implements Observer {
      * Constructor has essential frame components and is what runs the window
      * @param model the object that stores all the data
      * */
-    public ProfileForm(ProfileModel model){
+    public ProfileForm(Database model){
         this.model = model;
-        model.addObserver(this);
 
         JFrame f = new JFrame("Create Profile");
         panel = new JPanel(new SpringLayout());
@@ -48,8 +44,8 @@ public class ProfileForm implements Observer {
 
         //Lay out the panel
         SpringUtilities.makeCompactGrid(panel,
-                3, 2, //rows, cols
-                6, 6,        //initX, initY
+                3, 2,          //rows, cols
+                6, 6,      //initX, initY
                 6, 6);       //xPad, yPad
 
         //Make button and give it action listener
@@ -76,13 +72,8 @@ public class ProfileForm implements Observer {
         //Display window and set size
         f.pack();
 
-        f.setBounds(60,70, 300, 50);
         f.setSize(400,250);
         f.setVisible(true);
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-        System.out.println("Form Submitted.");
-    }
 }
