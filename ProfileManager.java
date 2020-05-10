@@ -36,8 +36,10 @@ public class ProfileManager{
 
         for(Database u : allProfiles.getAllVertices()){
             if(u.getName().equals(name))
+                System.out.println("User " + name +" found!");
                  return u.getProfile(u);
         }
+        System.out.println("User not found in Database Manager.");
         return v;
     }
 

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ public class View{
     private Database model;
     private ProfileManager manager;
     private JPanel mainPanel;
+    private JPanel searchPanel;
     private JPanel friendListPanel; //A panel to hold friend's list
 
     /**
@@ -22,13 +24,14 @@ public class View{
         this.manager = new ProfileManager();
         int WINDOW_WIDTH = 780;
         int WINDOW_HEIGHT = 400;
+        JLabel label = new JLabel("Friends List");
 
         //Create frame that takes button method
         JFrame frame = new HandleActionEventsForJButton();
 
-        //Build friend list panel
-        JLabel label = new JLabel("Friends List");
-        buildFriendListPanel();
+        //Build panels
+        buildFriendAndMainPanel();
+        buildSearchPanel();
 
         //Box for friend list
         Box bv = Box.createVerticalBox();
@@ -38,6 +41,7 @@ public class View{
         //Add components to frame
         frame.add(bv, BorderLayout.EAST);
         frame.add(mainPanel, BorderLayout.CENTER);
+        frame.add(searchPanel, BorderLayout.SOUTH);
 
         //Display the window
         frame.pack();
@@ -91,28 +95,55 @@ public class View{
         loginWindow.setVisible(true);
     }
 
-    /**
-     * Displays friend's info and their relationships. Has search field
-     * */
-    public void buildMainPanel(){
-        mainPanel = new JPanel(new BorderLayout());
+
+    public void buildSearchPanel(){
+        searchPanel = new JPanel(new FlowLayout());
+        mainPanel = new JPanel(new FlowLayout());
         JLabel searchLabel = new JLabel("Search:");
         JTextField searchText = new JTextField(10);
 
         //Match label with text
         searchLabel.setLabelFor(searchText);
 
-        //Box for search
-        Box bh = Box.createHorizontalBox();
-        bh.add(searchLabel);
-        bh.add(searchText);
-        //mainPanel.add(bh, BorderLayout.SOUTH);
+        //Add label and text to panel
+        searchPanel.add(searchLabel, FlowLayout.LEFT);
+        searchPanel.add(searchText);
+
+        //Create button
+        JButton button = new JButton("Search");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = searchText.getText();            //Gets String of textfield
+                Database d = manager.searchProfile(s);      //Gets profile of user and store it in Database object
+
+                JLabel name = new JLabel(d.name);
+                JLabel status = new JLabel(d.status);
+
+                System.out.println(d.name + " " + d.status);
+                System.out.println(s);
+
+                //Remove all old data before adding new info to panel
+                mainPanel.removeAll();
+
+                mainPanel.add(name);
+                mainPanel.add(status);
+
+                mainPanel.revalidate();
+                mainPanel.repaint();
+
+            }
+        });
+
+        //Add button to panel
+        searchPanel.add(button);
+
     }
 
     /**
      * Shows the friends list and aligns it downward
      * */
-    public void buildFriendListPanel(){
+    public void buildFriendAndMainPanel(){
         friendListPanel = new JPanel();
         mainPanel = new JPanel(new BorderLayout());
 
@@ -146,9 +177,14 @@ public class View{
                     JLabel name = new JLabel("Name: " + friendName);        //Friend name label
                     JLabel status = new JLabel("Status: " + s + "\n");      //Friend status label
 
+                    //Remove all old stuff in main panel
+                    mainPanel.removeAll();
+
                     //Add to panel
                     mainPanel.add(name, BorderLayout.CENTER);
                     mainPanel.add(status, BorderLayout.CENTER);
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
 
                     System.out.println("Currently viewing: " + friendName);
 
@@ -175,8 +211,15 @@ public class View{
         }
 
         //TODO:When you click on a friend, show their info
+
+        //Remove previous friend list panel
+        friendListPanel.removeAll();
+
         //Add buttons to panel
         friendListPanel.add(bv);
+        friendListPanel.revalidate();
+        friendListPanel.repaint();
+
         mainPanel.add(bv2, BorderLayout.CENTER);
     }
 
@@ -225,15 +268,6 @@ public class View{
         manager.createFriendship(d3, d4); //Josh --- Alexis
         manager.createFriendship(d4, d2); //Alexis --- Sair
 
-        System.out.println("Total Profiles: " + manager.getProfilesCount());
-        System.out.println("Expected: 4 \n");
-
-        System.out.println("Total Friends of Daniel: "
-                + manager.searchProfile("Daniel Tran").getFriends().size());
-        System.out.println("Expected: 2");
-
-
-
     }
 
     public class HandleActionEventsForJButton extends JFrame implements ActionListener{
@@ -243,9 +277,9 @@ public class View{
             this.getContentPane().setLayout(new BorderLayout(10, 5)); //hGap, vGap;
 
             //Build the labels
-            JLabel firstName = new JLabel("First Name: ");
+            JLabel firstName = new JLabel("First Name: " + model.name);
             JLabel lastName = new JLabel("Last Name: ");
-            JLabel status = new JLabel("Status: ");
+            JLabel status = new JLabel("Status: " + model.status);
 
             //Build the profile pic
             ImageIcon img = new ImageIcon(model.getProfilePicture());

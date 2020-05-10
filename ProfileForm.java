@@ -62,8 +62,8 @@ public class ProfileForm{
 
                     model.setName(fn, ln);
                     model.setStatus(s);
-                    System.out.println("Name: " + model.getName()
-                            + ", Status: " + model.getStatus());
+                    System.out.println("Set name as: " + model.getName()
+                            + ", Set status as: " + model.getStatus());
                 }
             }
         });

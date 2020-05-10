@@ -35,31 +35,25 @@ public class Database {
         return name;
     }
 
-
     public void setStatus(String stat) {
         status = stat;
     }
-
 
     public String getStatus() {
         return status;
     }
 
-
     public ArrayList<Database> getFriends() {
         return friendDatabases;
     }
-
 
     public void addFriend(Database p) {
         friendDatabases.add(p);
     }
 
-
     public void removeFriend(Database p) {
         friendDatabases.remove(p);
     }
-
 
     public String toString() {
         String line = "";
@@ -77,5 +71,4 @@ public class Database {
     {
         return p;
     }
-
-}// end Profile
+}
