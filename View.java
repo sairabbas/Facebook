@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
@@ -53,22 +54,28 @@ public class View{
     public void LoginView() {
         //Create login instructions label
         JLabel instructionLabel = new JLabel("Create A Profile To Join Network");
-        instructionLabel.setBounds(270,150,215,20);
+        instructionLabel.setBounds(285,5,215,20);
         //Create name label
-        JLabel nameLabel = new JLabel("Name");
-        nameLabel.setBounds(270,200,80,25);
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setBounds(270,50,80,25);
         //Create login text field 10 characters wide
         JTextField nameTextField = new JTextField(10);
-        nameTextField.setBounds(308,200,165,25);
+        nameTextField.setBounds(315,50,165,25);
         //Create image label
-        JLabel imageLabel = new JLabel("Select Image:");
-        imageLabel.setBounds(270, 228, 175, 25);
+        JLabel imageLabel = new JLabel("Select Profile Image:");
+        imageLabel.setBounds(183, 90, 127, 25);
+        //Create select image file button
+        JFileChooser fileChooser = new BufferedImage();
+        fileChooser.setBounds(288, 84, 300, 300);
+        fileChooser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileChooser.getSelectedFile();
+            }
+        });
         //Create login button with caption
         JButton joinButton = new JButton("Join");
-        joinButton.setBounds(270, 275, 100, 25);
-        //Create select image file button
-        JFileChooser fileButton = new JFileChooser();
-        fileButton.setBounds(370, 228, 700, 700);
+        joinButton.setBounds(0, 120, 100, 25);
         //Create JPanel object to reference labels
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(null);
@@ -78,7 +85,8 @@ public class View{
         loginPanel.add(nameTextField);
         loginPanel.add(imageLabel);
         loginPanel.add(joinButton);
-        loginPanel.add(fileButton);
+        loginPanel.add(fileChooser);
+        frame.getContentPane().removeAll();
         frame.add(loginPanel);
         frame.setVisible(true);
     }
