@@ -43,10 +43,7 @@ public class ProfileForm{
         panel.add(status);
 
         //Lay out the panel
-        SpringUtilities.makeCompactGrid(panel,
-                3, 2,          //rows, cols
-                6, 6,      //initX, initY
-                6, 6);       //xPad, yPad
+        SpringUtilities.makeCompactGrid(panel, 3, 2, 6, 6, 6, 6);
 
         //Make button and give it action listener
         JButton button = new JButton("Submit");

@@ -4,6 +4,7 @@ import java.awt.*;
 /**
  * Has methods for creating forms and grid-style layouts with SpringLayout
  * */
+
 public class SpringUtilities{
     public static void printSizes(Component c) {
         System.out.println("minimumSize = " + c.getMinimumSize());

@@ -13,7 +13,7 @@ public class View{
     private JPanel mainPanel;
     private JPanel searchPanel;
     private JPanel friendListPanel; //A panel to hold friend's list
-
+    JFrame frame;
     /**
      * Constructor builds the panels and labels, has database in order to display.
      * Runs frame when object is created.
@@ -27,7 +27,7 @@ public class View{
         JLabel label = new JLabel("Friends List");
 
         //Create frame that takes button method
-        JFrame frame = new HandleActionEventsForJButton();
+        frame = new HandleActionEventsForJButton();
 
         //Build panels
         buildFriendAndMainPanel();
@@ -51,16 +51,6 @@ public class View{
     }
 
     public void LoginView() {
-        final int WINDOW_WIDTH = 750;
-        final int WINDOW_HEIGHT = 750;
-        //Create a login window
-        JFrame loginWindow = new JFrame();
-        //Set the title
-        loginWindow.setTitle("MockFB");
-        //Set the size of the window
-        loginWindow.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        //Specify what when the close button is clicked
-        loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create login instructions label
         JLabel instructionLabel = new JLabel("Create A Profile To Join Network");
         instructionLabel.setBounds(270,150,215,20);
@@ -89,10 +79,8 @@ public class View{
         loginPanel.add(imageLabel);
         loginPanel.add(joinButton);
         loginPanel.add(fileButton);
-        //Add panel to login window
-        loginWindow.add(loginPanel);
-        //Display the login window
-        loginWindow.setVisible(true);
+        frame.add(loginPanel);
+        frame.setVisible(true);
     }
 
 
