@@ -27,13 +27,14 @@ public class View implements Observer
         Home();
         Create();
         Login();
-        Dashboard(new Model());
+        //Dashboard(model);
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(dashboard);
+        //frame.add(dashboard);
+        frame.add(home);
         //frame.pack();
         frame.setVisible(true);
     }
@@ -242,11 +243,14 @@ public class View implements Observer
     {
         dashboard = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+        String name = user.getName();
+        String status = user.getStatus();
 
         //Resize Profile Picture
         JLabel image = new JLabel();
         image.setBounds(0,0,200,200);
-        ImageIcon logo = new ImageIcon("logo.jpg");
+        //ImageIcon logo = new ImageIcon("logo.jpg");
+        ImageIcon logo = manager.getPicture(user.getName());
         Image img = logo.getImage();
         Image sized = img.getScaledInstance(image.getWidth(),image.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon sizedImage = new ImageIcon(sized);
@@ -262,15 +266,17 @@ public class View implements Observer
 
         //Name
         c.insets = new Insets(225,10,0,10);
-        dashboard.add(new JLabel("Name: Sair Abbas"), c);
+        //dashboard.add(new JLabel("Name: Sair Abbas"), c);
+        dashboard.add(new JLabel(name), c);
 
         //Status
         c.insets = new Insets(250,10,0,10);
-        dashboard.add(new JLabel("Status: Online"), c);
+        dashboard.add(new JLabel(status), c);
 
         //Friends
         c.insets = new Insets(275,10,0,10);
-        dashboard.add(new JLabel("Friends: 10"), c);
+        dashboard.add(new JLabel("Total Friends: "
+                + manager.getFriendList(user).size()), c);
 
         //Edit
         c.insets = new Insets(300,10,0,10);
