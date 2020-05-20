@@ -1,13 +1,15 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-
-public class View{
+public class View
+{
 
     private Database model;
     private ProfileManager manager;
@@ -51,7 +53,12 @@ public class View{
         frame.setVisible(true);
     }
 
-    public void LoginView() {
+    public void CreateView()
+    {
+        //Create JPanel object to reference labels
+        JPanel createPanel = new JPanel();
+        createPanel.setLayout(null);
+        final BufferedImage[] image = new BufferedImage[1];
         //Create login instructions label
         JLabel instructionLabel = new JLabel("Create A Profile To Join Network");
         instructionLabel.setBounds(285,5,215,20);
@@ -65,29 +72,60 @@ public class View{
         JLabel imageLabel = new JLabel("Select Profile Image:");
         imageLabel.setBounds(183, 90, 127, 25);
         //Create select image file button
-        JFileChooser fileChooser = new BufferedImage();
+        JFileChooser fileChooser = new JFileChooser();
         fileChooser.setBounds(288, 84, 300, 300);
         fileChooser.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                fileChooser.getSelectedFile();
+            public void actionPerformed(ActionEvent e)
+            {
+                String action = e.getActionCommand();
+                System.out.println(fileChooser.getSelectedFile());
+                if (action.equals("Open"))
+                {
+                    try
+                    {
+                        image[0] = ImageIO.read(fileChooser.getSelectedFile());
+                    }
+                    catch (IOException ioException)
+                    {
+                        ioException.printStackTrace();
+                    }
+                }
+                else if (action.equals("Cancel"))
+                {
+                    try
+                    {
+                        image[0] = ImageIO.read(new File("logo.jpg"));
+                    }
+                    catch (IOException ioException)
+                    {
+                        ioException.printStackTrace();
+                    }
+                }
             }
         });
         //Create login button with caption
         JButton joinButton = new JButton("Join");
         joinButton.setBounds(0, 120, 100, 25);
-        //Create JPanel object to reference labels
-        JPanel loginPanel = new JPanel();
-        loginPanel.setLayout(null);
+        joinButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                String names[] = nameTextField.getText().split("\\s+");
+                model.setName(names[0], names[1]);
+                model.setProfilePicture(image);
+            }
+        });
         //Add labels to panel
-        loginPanel.add(instructionLabel);
-        loginPanel.add(nameLabel);
-        loginPanel.add(nameTextField);
-        loginPanel.add(imageLabel);
-        loginPanel.add(joinButton);
-        loginPanel.add(fileChooser);
+        createPanel.add(instructionLabel);
+        createPanel.add(nameLabel);
+        createPanel.add(nameTextField);
+        createPanel.add(imageLabel);
+        createPanel.add(joinButton);
+        createPanel.add(fileChooser);
         frame.getContentPane().removeAll();
-        frame.add(loginPanel);
+        frame.add(createPanel);
         frame.setVisible(true);
     }
 
@@ -263,7 +301,6 @@ public class View{
         manager.createFriendship(d1, d3); //Daniel --- Josh
         manager.createFriendship(d3, d4); //Josh --- Alexis
         manager.createFriendship(d4, d2); //Alexis --- Sair
-
     }
 
     public class HandleActionEventsForJButton extends JFrame implements ActionListener{
@@ -332,7 +369,7 @@ public class View{
                 System.out.println("Add Button pressed!");
             }
             else if (action.equals("Join Network")) {
-                LoginView();
+                CreateView();
             }
             else if (action.equals("Leave Network")) {
                 System.out.println("Leave Button pressed!");

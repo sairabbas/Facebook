@@ -12,7 +12,7 @@ public class Database {
 
     //Constructor
     public Database() {
-        name = ""; status = ""; fileName = "default.png";
+        name = ""; status = ""; fileName = "logo.jpg";
         friendDatabases = new ArrayList<>();
         try{
             picture = ImageIO.read(new File(fileName));
@@ -23,9 +23,7 @@ public class Database {
         return picture;
     }
 
-    public void setProfilePicture(BufferedImage newPicture) {
-        picture = newPicture;
-    }
+    public void setProfilePicture(BufferedImage[] newPicture) { picture = newPicture[0]; }
 
     public void setName(String firstName, String lastName) {
         name = firstName + " " + lastName;
