@@ -36,7 +36,8 @@ public class View1 implements Observer
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(home);
+        frame.add(dashboard);
+        frame.pack();
         frame.setVisible(true);
     }
 
@@ -228,8 +229,8 @@ public class View1 implements Observer
     {
         dashboard = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
 
+        //Resize Profile Picture
         JLabel image = new JLabel();
         image.setBounds(0,0,200,200);
         ImageIcon logo = new ImageIcon("logo.jpg");
@@ -239,31 +240,53 @@ public class View1 implements Observer
         image.setIcon(sizedImage);
 
         //Profile picture
-        c.weightx = 0.5;
         c.gridx = 0;
         c.gridy = 0;
-        c.anchor = GridBagConstraints.NORTH;
+        c.insets = new Insets(10,10,10,10);
         dashboard.add(image, c);
 
-        //Status
-        c.weightx = 0.5;
+        //Name
         c.gridx = 0;
         c.gridy = 1;
-        JLabel nameLabel = new JLabel("Sair Abbas");
-        nameLabel.setBounds(100,100,50,250);
-        dashboard.add(nameLabel, c);
+        dashboard.add(new JLabel("Name: Sair Abbas"), c);
 
-        button = new JButton("Button 2");
+        //Status
+        c.gridx = 0;
+        c.gridy = 2;
+        dashboard.add(new JLabel("Status: Online"), c);
+
+        //Friends
+        c.gridx = 0;
+        c.gridy = 3;
+        dashboard.add(new JLabel("Friends: 10"), c);
+
+        //Edit
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 4;
+        dashboard.add(new JButton("Edit Profile"), c);
+
+        //Edit
+        c.gridx = 0;
+        c.gridy = 5;
+        dashboard.add(new JButton("Logout"), c);
+
+        //Search Bar
+        c.anchor = GridBagConstraints.NORTH;
+        c.insets = new Insets(10,0,0,0);
         c.gridx = 1;
         c.gridy = 0;
-        dashboard.add(button, c);
+        dashboard.add(new JTextField(10), c);
 
-        button = new JButton("Button 3");
+        //Search Button
         c.gridx = 2;
         c.gridy = 0;
-        dashboard.add(button, c);
+        dashboard.add(new JButton("Search"), c);
 
-
+        //Feed
+        c.gridx = 3;
+        c.gridy = 0;
+        dashboard.add(new JLabel("FEED"), c);
     }
 
 

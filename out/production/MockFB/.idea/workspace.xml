@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60e7c14a-cf4c-4be6-8dbe-be4195b9d321" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/default.png" beforeDir="false" afterPath="$PROJECT_DIR$/logo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MockFB/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View$HandleActionEventsForJButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View$HandleActionEventsForJButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View1.java" beforeDir="false" afterPath="$PROJECT_DIR$/View1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,30 +91,30 @@
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state x="458" y="187" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.23.1440.821@0.23.1440.821" timestamp="1589933962464" />
-    <state width="1398" height="165" key="GridCell.Tab.0.bottom" timestamp="1589946416604">
+    <state width="802" height="27" key="GridCell.Tab.0.bottom" timestamp="1589960363571">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="144" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588876451338" />
-    <state width="1398" height="165" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1589946416604" />
-    <state width="1398" height="165" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1589941044967" />
-    <state width="1398" height="165" key="GridCell.Tab.0.center" timestamp="1589946416604">
+    <state width="802" height="27" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1589960363571" />
+    <state width="1398" height="165" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1589952988491" />
+    <state width="802" height="27" key="GridCell.Tab.0.center" timestamp="1589960363570">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="144" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1588876451337" />
-    <state width="1398" height="165" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1589946416604" />
-    <state width="1398" height="165" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1589941044966" />
-    <state width="1398" height="165" key="GridCell.Tab.0.left" timestamp="1589946416603">
+    <state width="802" height="27" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1589960363570" />
+    <state width="1398" height="165" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1589952988490" />
+    <state width="802" height="27" key="GridCell.Tab.0.left" timestamp="1589960363570">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="144" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1588876451337" />
-    <state width="1398" height="165" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1589946416603" />
-    <state width="1398" height="165" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1589941044966" />
-    <state width="1398" height="165" key="GridCell.Tab.0.right" timestamp="1589946416604">
+    <state width="802" height="27" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1589960363570" />
+    <state width="1398" height="165" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1589952988490" />
+    <state width="802" height="27" key="GridCell.Tab.0.right" timestamp="1589960363571">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="144" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1588876451338" />
-    <state width="1398" height="165" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1589946416604" />
-    <state width="1398" height="165" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1589941044966" />
+    <state width="802" height="27" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1589960363571" />
+    <state width="1398" height="165" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1589952988490" />
     <state x="260" y="74" key="SettingsEditor" timestamp="1588888095233">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
