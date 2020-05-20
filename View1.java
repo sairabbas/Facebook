@@ -20,6 +20,7 @@ public class View1 implements Observer
     JPanel create;
     JPanel login;
     JPanel dashboard;
+    JPanel edit;
     //Window frame size constants
     final int WINDOW_WIDTH = 700;
     final int WINDOW_HEIGHT = 450;
@@ -37,7 +38,6 @@ public class View1 implements Observer
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(dashboard);
-        frame.pack();
         frame.setVisible(true);
     }
 
@@ -147,6 +147,7 @@ public class View1 implements Observer
                 model.profile.setPassword(passwordTextField.getText());
                 frame.getContentPane().removeAll();
                 frame.add(dashboard);
+                frame.pack();
                 frame.setVisible(true);
             }
         });
@@ -201,8 +202,10 @@ public class View1 implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                Dashboard();
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(dashboard);
+                frame.pack();
                 frame.setVisible(true);
             }
         });
@@ -242,7 +245,7 @@ public class View1 implements Observer
         //Profile picture
         c.gridx = 0;
         c.gridy = 0;
-        c.insets = new Insets(8,10,8,10);
+        c.insets = new Insets(10,10,10,10);
         dashboard.add(image, c);
 
         //Name
@@ -261,15 +264,36 @@ public class View1 implements Observer
         dashboard.add(new JLabel("Friends: 10"), c);
 
         //Edit
+        JButton editButton = new JButton("Edit Profile");
+        editButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Edit();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(edit);
+                frame.setVisible(true);
+            }
+        });
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 4;
-        dashboard.add(new JButton("Edit Profile"), c);
+        dashboard.add(editButton, c);
 
-        //Edit
+        //Logout
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                View1 view1 = new View1();
+            }
+        });
         c.gridx = 0;
         c.gridy = 5;
-        dashboard.add(new JButton("Logout"), c);
+        dashboard.add(logoutButton, c);
 
         //Search Bar
         c.anchor = GridBagConstraints.NORTH;
@@ -282,9 +306,8 @@ public class View1 implements Observer
 
         //Feed
         c.gridx = 1;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
-            c.gridy = i;
             JLabel image1 = new JLabel();
             image1.setBounds(0,0,100,100);
             ImageIcon logo1 = new ImageIcon("logo.jpg");
@@ -295,7 +318,11 @@ public class View1 implements Observer
             dashboard.add(image1, c);
         }
     }
+    //Edit profile application page
+    public void Edit()
+    {
 
+    }
 
     @Override
     public void update(Observable o, Object arg)
