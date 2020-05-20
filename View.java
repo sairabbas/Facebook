@@ -257,7 +257,7 @@ public class View implements Observer
 
         //Friends
         c.insets = new Insets(275,10,0,10);
-        dashboard.add(new JLabel("Friends: 10"), c);
+        dashboard.add(new JLabel("Friends: Daniel Tran"), c);
 
         //Edit
         c.insets = new Insets(300,10,0,10);
@@ -301,8 +301,9 @@ public class View implements Observer
         dashboard.add(new JButton("Search Name"), c);
 
         //Feed
-        int top = 73;
-        c.insets = new Insets(top,10,0,10);
+        int topImage = 73;
+        int topInfo = 92;
+        c.insets = new Insets(topImage,10,0,10);
         for (int i = 0; i < 3; i++)
         {
             JLabel image1 = new JLabel();
@@ -313,9 +314,20 @@ public class View implements Observer
             ImageIcon sizedImage1 = new ImageIcon(sized1);
             image1.setIcon(sizedImage1);
             dashboard.add(image1, c);
-            JLabel nameLabel = new JLabel("Daniel Tran");
-            top = top + 95;
-            c.insets = new Insets(top ,10,0,10);
+            JLabel nameLabel = new JLabel("Name: Daniel Tran");
+            JLabel statusLabel = new JLabel("Status: Online");
+            JLabel friendsLabel = new JLabel("Friends: Sair Abbas");
+            c.insets = new Insets(topInfo ,125,0,10);
+            dashboard.add(nameLabel, c);
+            topInfo = topInfo + 20;
+            c.insets = new Insets(topInfo ,125,0,10);
+            dashboard.add(statusLabel, c);
+            topInfo = topInfo + 20;
+            c.insets = new Insets(topInfo ,125,0,10);
+            dashboard.add(friendsLabel, c);
+            topImage = topImage + 100;
+            c.insets = new Insets(topImage ,10,0,10);
+            topInfo = topInfo + 61;
         }
     }
     //Edit profile application page
