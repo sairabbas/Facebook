@@ -245,25 +245,26 @@ public class View1 implements Observer
         //Profile picture
         c.gridx = 0;
         c.gridy = 0;
-        c.insets = new Insets(10,10,10,10);
+        c.gridheight = 1;
+        c.anchor = GridBagConstraints.NORTH;
+        c.insets = new Insets(10,10,0,10);
         dashboard.add(image, c);
 
         //Name
-        c.gridx = 0;
-        c.gridy = 1;
+        c.insets = new Insets(225,10,0,10);
         dashboard.add(new JLabel("Name: Sair Abbas"), c);
 
         //Status
-        c.gridx = 0;
-        c.gridy = 2;
+        c.insets = new Insets(250,10,0,10);
         dashboard.add(new JLabel("Status: Online"), c);
 
         //Friends
-        c.gridx = 0;
-        c.gridy = 3;
+        c.insets = new Insets(275,10,0,10);
         dashboard.add(new JLabel("Friends: 10"), c);
 
         //Edit
+        c.insets = new Insets(300,10,0,10);
+        c.fill = GridBagConstraints.HORIZONTAL;
         JButton editButton = new JButton("Edit Profile");
         editButton.addActionListener(new ActionListener()
         {
@@ -276,12 +277,10 @@ public class View1 implements Observer
                 frame.setVisible(true);
             }
         });
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 4;
         dashboard.add(editButton, c);
 
         //Logout
+        c.insets = new Insets(335,10,0,10);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(new ActionListener()
         {
@@ -291,31 +290,32 @@ public class View1 implements Observer
                 View1 view1 = new View1();
             }
         });
-        c.gridx = 0;
-        c.gridy = 5;
         dashboard.add(logoutButton, c);
 
         //Search Bar
-        c.anchor = GridBagConstraints.NORTH;
-        c.insets = new Insets(10,10,10,10);
         c.gridx = 1;
         c.gridy = 0;
+        c.insets = new Insets(10,10,0,10);
         dashboard.add(new JTextField(12), c);
-        c.insets = new Insets(35,10,10,10);
+        c.insets = new Insets(35,10,0,10);
         dashboard.add(new JButton("Search Name"), c);
 
         //Feed
-        c.gridx = 1;
-        for (int i = 0; i < 4; i++)
+        int top = 75;
+        c.insets = new Insets(top,10,0,10);
+        for (int i = 0; i < 3; i++)
         {
             JLabel image1 = new JLabel();
-            image1.setBounds(0,0,100,100);
+            image1.setBounds(0,0,85,85);
             ImageIcon logo1 = new ImageIcon("logo.jpg");
             Image img1 = logo1.getImage();
             Image sized1 = img1.getScaledInstance(image1.getWidth(),image1.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon sizedImage1 = new ImageIcon(sized1);
             image1.setIcon(sizedImage1);
             dashboard.add(image1, c);
+            JLabel nameLabel = new JLabel("Daniel Tran");
+            top = top + 85;
+            c.insets = new Insets(top ,10,0,10);
         }
     }
     //Edit profile application page
