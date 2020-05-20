@@ -242,7 +242,7 @@ public class View1 implements Observer
         //Profile picture
         c.gridx = 0;
         c.gridy = 0;
-        c.insets = new Insets(10,10,10,10);
+        c.insets = new Insets(8,10,8,10);
         dashboard.add(image, c);
 
         //Name
@@ -276,17 +276,9 @@ public class View1 implements Observer
         c.insets = new Insets(10,0,0,0);
         c.gridx = 1;
         c.gridy = 0;
-        dashboard.add(new JTextField(10), c);
-
-        //Search Button
-        c.gridx = 2;
-        c.gridy = 0;
+        dashboard.add(new JTextField(12), c);
+        c.insets = new Insets(35,0,0,0);
         dashboard.add(new JButton("Search"), c);
-
-        //Feed
-        c.gridx = 3;
-        c.gridy = 0;
-        dashboard.add(new JLabel("FEED"), c);
     }
 
 
