@@ -9,7 +9,7 @@ public class View implements Observer
 {
     //Declare and initialize model
     Model model = new Model();
-
+    Manager manager = new Manager();
     //Declare application frame and panels
     JFrame frame;
     JPanel home;
@@ -27,14 +27,14 @@ public class View implements Observer
         Home();
         Create();
         Login();
-        Dashboard();
+        Dashboard(new Model());
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(dashboard);
-        frame.pack();
+        //frame.pack();
         frame.setVisible(true);
     }
 
@@ -139,12 +139,14 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Dashboard();
-                model.profile.setName(nameTextField.getText());
-                model.profile.setPassword(passwordTextField.getText());
+                //model.setName(nameTextField.getText());
+                //model.setPassword(passwordTextField.getText());
+                manager.addAccount(nameTextField.getText(),
+                        passwordTextField.getText(),
+                        fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
-                frame.add(dashboard);
-                frame.pack();
+                Login();
+                frame.add(login);
                 frame.setVisible(true);
             }
         });
@@ -199,11 +201,16 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Dashboard();
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(dashboard);
-                frame.pack();
-                frame.setVisible(true);
+                String name = nameTextField.getText();
+                if(manager.login(name, passwordTextField.getText()))
+                {
+                    Model currentUser = manager.searchProfile(name);
+                    Dashboard(currentUser);
+                    frame.getContentPane().removeAll();
+                    frame.getContentPane().add(dashboard);
+                    frame.pack();
+                    frame.setVisible(true);
+                }
             }
         });
         login.add(loginButton);
@@ -215,17 +222,23 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-               Home();
-               frame.getContentPane().removeAll();
-               frame.getContentPane().add(home);
-               frame.setVisible(true);
+                Home();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(home);
+                frame.setVisible(true);
             }
         });
         login.add(previousButton);
     }
 
+
     JButton button;
-    public void Dashboard()
+    /**
+     * Dashboard takes user's current info and displays
+     * name, status, and friends list
+     * @param user the current user
+     * */
+    public void Dashboard(Model user)
     {
         dashboard = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

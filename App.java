@@ -1,11 +1,14 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
+/**
+ * @author : Daniel Tran & Sair Abbas*/
 public class App
 {
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args)
     {
-        //Declare model object
-        Model model = new Model();
+        Manager manager = new Manager();
+
         //Declare view object
         View view = new View();
     }
