@@ -273,12 +273,27 @@ public class View1 implements Observer
 
         //Search Bar
         c.anchor = GridBagConstraints.NORTH;
-        c.insets = new Insets(10,0,0,0);
+        c.insets = new Insets(10,10,10,10);
         c.gridx = 1;
         c.gridy = 0;
         dashboard.add(new JTextField(12), c);
-        c.insets = new Insets(35,0,0,0);
-        dashboard.add(new JButton("Search"), c);
+        c.insets = new Insets(35,10,10,10);
+        dashboard.add(new JButton("Search Name"), c);
+
+        //Feed
+        c.gridx = 1;
+        for (int i = 0; i < 3; i++)
+        {
+            c.gridy = i;
+            JLabel image1 = new JLabel();
+            image1.setBounds(0,0,100,100);
+            ImageIcon logo1 = new ImageIcon("logo.jpg");
+            Image img1 = logo1.getImage();
+            Image sized1 = img1.getScaledInstance(image1.getWidth(),image1.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon sizedImage1 = new ImageIcon(sized1);
+            image1.setIcon(sizedImage1);
+            dashboard.add(image1, c);
+        }
     }
 
 
