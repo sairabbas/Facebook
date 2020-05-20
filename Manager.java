@@ -1,6 +1,10 @@
+import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-/**Class holds a graph full of Model objects.
+/**Class holds a graph full of Model objects (users).
+ * Holds accounts and their profile pics.
  * Able to add/remove Model obj to Graph tree.
  * Has getter methods for Graph tree.
  * Able to create vertex/edges for tree.*/
@@ -9,14 +13,58 @@ public class Manager {
     //Holds all of profiles
     private Graph users;
     private ArrayList<Model> friends;
+    private HashMap<String, String> accounts;
+    private HashMap<String, ImageIcon> pictures;
 
     public Manager(){
         users = new Graph();
         friends = new ArrayList<>();
+        accounts = new HashMap<>();
+        pictures = new HashMap<>();
     }
+
+    /**
+     * @param name the username
+     * @param password the password
+     * Adds username/pw to map to store
+     * */
+    public void addAccount(String name, String password, File file){
+        if(accounts.containsKey(name))
+            System.out.println("Username is already taken.");
+        else
+            System.out.println("Name: " + name + " is registered.");
+            accounts.put(name, password);
+            pictures.put(name, new ImageIcon(String.valueOf(file)));
+    }
+    /**
+     * @param name the username
+     * @param password the password
+     * Checks if username and password is valid.
+     * @return False if invalid. Else, true
+     * */
+    public boolean login(String name, String password){
+        boolean flag = false;
+        if(accounts.containsKey(name) && accounts.get(name).equals(password))
+            flag = true; //The username/pass exists and matches
+        else if(!accounts.containsKey(name))
+            System.out.println("Invalid username.");
+        else if(!accounts.containsValue(password))
+            System.out.println("Invalid password.");
+        return flag;
+    }
+
 
     public void addProfile(Model m){
         users.addVertex(m);
+    }
+
+    public ImageIcon getPicture(String name){
+        ImageIcon pic = new ImageIcon("logo.png");
+        if(pictures.containsKey(name)) {
+            pic = pictures.get(name);
+            return pic;
+        }
+        return pic;
     }
 
     /**

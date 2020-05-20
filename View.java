@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,7 +9,7 @@ public class View implements Observer
 {
     //Declare and initialize model
     Model model = new Model();
-
+    Manager manager = new Manager();
     //Declare application frame and panels
     JFrame frame;
     JPanel home;
@@ -28,13 +27,14 @@ public class View implements Observer
         Home();
         Create();
         Login();
-        Dashboard();
+        Dashboard(new Model());
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(dashboard);
+        //frame.pack();
         frame.setVisible(true);
     }
 
@@ -139,12 +139,14 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Dashboard();
-                model.setName(nameTextField.getText());
-                model.setPassword(passwordTextField.getText());
+                //model.setName(nameTextField.getText());
+                //model.setPassword(passwordTextField.getText());
+                manager.addAccount(nameTextField.getText(),
+                        passwordTextField.getText(),
+                        fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
-                frame.add(dashboard);
-                frame.pack();
+                Login();
+                frame.add(login);
                 frame.setVisible(true);
             }
         });
@@ -199,11 +201,16 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Dashboard();
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(dashboard);
-                frame.pack();
-                frame.setVisible(true);
+                String name = nameTextField.getText();
+                if(manager.login(name, passwordTextField.getText()))
+                {
+                    Model currentUser = manager.searchProfile(name);
+                    Dashboard(currentUser);
+                    frame.getContentPane().removeAll();
+                    frame.getContentPane().add(dashboard);
+                    frame.pack();
+                    frame.setVisible(true);
+                }
             }
         });
         login.add(loginButton);
@@ -224,8 +231,14 @@ public class View implements Observer
         login.add(previousButton);
     }
 
+
     JButton button;
-    public void Dashboard()
+    /**
+     * Dashboard takes user's current info and displays
+     * name, status, and friends list
+     * @param user the current user
+     * */
+    public void Dashboard(Model user)
     {
         dashboard = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -284,7 +297,10 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                View view = new View();
+                Home();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(home);
+                frame.setVisible(true);
             }
         });
         dashboard.add(logoutButton, c);
@@ -298,21 +314,33 @@ public class View implements Observer
         dashboard.add(new JButton("Search Name"), c);
 
         //Feed
-        int top = 75;
-        c.insets = new Insets(top,10,0,10);
+        int topImage = 73;
+        int topInfo = 92;
+        c.insets = new Insets(topImage,10,0,10);
         for (int i = 0; i < 3; i++)
         {
             JLabel image1 = new JLabel();
-            image1.setBounds(0,0,85,85);
+            image1.setBounds(0,0,95,95);
             ImageIcon logo1 = new ImageIcon("logo.jpg");
             Image img1 = logo1.getImage();
             Image sized1 = img1.getScaledInstance(image1.getWidth(),image1.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon sizedImage1 = new ImageIcon(sized1);
             image1.setIcon(sizedImage1);
             dashboard.add(image1, c);
-            JLabel nameLabel = new JLabel("Daniel Tran");
-            top = top + 85;
-            c.insets = new Insets(top ,10,0,10);
+            JLabel nameLabel = new JLabel("Name: Daniel Tran");
+            JLabel statusLabel = new JLabel("Status: Online");
+            JLabel friendsLabel = new JLabel("Friends: Sair Abbas");
+            c.insets = new Insets(topInfo ,125,0,10);
+            dashboard.add(nameLabel, c);
+            topInfo = topInfo + 20;
+            c.insets = new Insets(topInfo ,125,0,10);
+            dashboard.add(statusLabel, c);
+            topInfo = topInfo + 20;
+            c.insets = new Insets(topInfo ,125,0,10);
+            dashboard.add(friendsLabel, c);
+            topImage = topImage + 100;
+            c.insets = new Insets(topImage ,10,0,10);
+            topInfo = topInfo + 61;
         }
     }
     //Edit profile application page
