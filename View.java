@@ -275,8 +275,12 @@ public class View implements Observer
 
         //Friends
         c.insets = new Insets(275,10,0,10);
+<<<<<<< HEAD
         dashboard.add(new JLabel("Total Friends: "
                 + manager.getFriendList(user).size()), c);
+=======
+        dashboard.add(new JLabel("Friends: Daniel Tran"), c);
+>>>>>>> 37c4c8bea7e7a4cb2a7d5676f70b74e874075f06
 
         //Edit
         c.insets = new Insets(300,10,0,10);
@@ -322,6 +326,7 @@ public class View implements Observer
         //Feed
         int topImage = 73;
         int topInfo = 92;
+        int topAdd = 105;
         c.insets = new Insets(topImage,10,0,10);
         for (int i = 0; i < 3; i++)
         {
@@ -344,9 +349,13 @@ public class View implements Observer
             topInfo = topInfo + 20;
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(friendsLabel, c);
+            JButton addButton = new JButton("+ Add Friend");
+            c.insets = new Insets(topAdd ,260,0,10);
+            dashboard.add(addButton, c);
             topImage = topImage + 100;
             c.insets = new Insets(topImage ,10,0,10);
             topInfo = topInfo + 61;
+            topAdd = topAdd + 102;
         }
     }
     //Edit profile application page
