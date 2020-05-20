@@ -1,381 +1,329 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class View
+public class View implements Observer
 {
+    //Declare and initialize model
+    Model model = new Model();
 
-    private Database model;
-    private ProfileManager manager;
-    private JPanel mainPanel;
-    private JPanel searchPanel;
-    private JPanel friendListPanel; //A panel to hold friend's list
+    //Declare application frame and panels
     JFrame frame;
-    /**
-     * Constructor builds the panels and labels, has database in order to display.
-     * Runs frame when object is created.
-     * @param model holds the data
-     * */
-    public View(Database model){
-        this.model = model;
-        this.manager = new ProfileManager();
-        int WINDOW_WIDTH = 780;
-        int WINDOW_HEIGHT = 400;
-        JLabel label = new JLabel("Friends List");
+    JPanel home;
+    JPanel create;
+    JPanel login;
+    JPanel dashboard;
+    JPanel edit;
+    //Window frame size constants
+    final int WINDOW_WIDTH = 700;
+    final int WINDOW_HEIGHT = 450;
 
-        //Create frame that takes button method
-        frame = new HandleActionEventsForJButton();
-
-        //Build panels
-        buildFriendAndMainPanel();
-        buildSearchPanel();
-
-        //Box for friend list
-        Box bv = Box.createVerticalBox();
-        bv.add(label);
-        bv.add(friendListPanel);
-
-        //Add components to frame
-        frame.add(bv, BorderLayout.EAST);
-        frame.add(mainPanel, BorderLayout.CENTER);
-        frame.add(searchPanel, BorderLayout.SOUTH);
-
-        //Display the window
-        frame.pack();
+    //Display application home page
+    public View()
+    {
+        Home();
+        Create();
+        Login();
+        Dashboard();
+        model.addObserver(this);
+        frame = new JFrame();
+        frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(dashboard);
         frame.setVisible(true);
     }
 
-    public void CreateView()
+    //Construct application home page
+    public void Home()
     {
-        //Create JPanel object to reference labels
-        JPanel createPanel = new JPanel();
-        createPanel.setLayout(null);
-        final BufferedImage[] image = new BufferedImage[1];
-        //Create login instructions label
-        JLabel instructionLabel = new JLabel("Create A Profile To Join Network");
-        instructionLabel.setBounds(285,5,215,20);
-        //Create name label
-        JLabel nameLabel = new JLabel("Name:");
-        nameLabel.setBounds(270,50,80,25);
-        //Create login text field 10 characters wide
-        JTextField nameTextField = new JTextField(10);
-        nameTextField.setBounds(315,50,165,25);
-        //Create image label
-        JLabel imageLabel = new JLabel("Select Profile Image:");
-        imageLabel.setBounds(183, 90, 127, 25);
-        //Create select image file button
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setBounds(288, 84, 300, 300);
-        fileChooser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                String action = e.getActionCommand();
-                System.out.println(fileChooser.getSelectedFile());
-                if (action.equals("Open"))
-                {
-                    try
-                    {
-                        image[0] = ImageIO.read(fileChooser.getSelectedFile());
-                    }
-                    catch (IOException ioException)
-                    {
-                        ioException.printStackTrace();
-                    }
-                }
-                else if (action.equals("Cancel"))
-                {
-                    try
-                    {
-                        image[0] = ImageIO.read(new File("logo.jpg"));
-                    }
-                    catch (IOException ioException)
-                    {
-                        ioException.printStackTrace();
-                    }
-                }
-            }
-        });
-        //Create login button with caption
-        JButton joinButton = new JButton("Join");
-        joinButton.setBounds(0, 120, 100, 25);
-        joinButton.addActionListener(new ActionListener()
+        Create();
+        Login();
+
+        home = new JPanel();
+        home.setLayout(null);
+
+        JLabel image = new JLabel();
+        image.setBounds(287,0,125,125);
+        ImageIcon logo = new ImageIcon("logo.jpg");
+        Image img = logo.getImage();
+        Image sized = img.getScaledInstance(image.getWidth(),image.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon sizedImage = new ImageIcon(sized);
+        image.setIcon(sizedImage);
+        home.add(image);
+
+        JLabel greetingLabel = new JLabel("Welcome to MockFB!");
+        greetingLabel.setBounds(285,135,215,20);
+        home.add(greetingLabel);
+
+        JLabel createLabel = new JLabel("Create A New Account");
+        createLabel.setBounds(180,175,140,20);
+        home.add(createLabel);
+
+        JButton createButton = new JButton("Create");
+        createButton.setBounds(200,205,100,20);
+        createButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                String names[] = nameTextField.getText().split("\\s+");
-                model.setName(names[0], names[1]);
-                model.setProfilePicture(image);
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(create);
+                frame.setVisible(true);
             }
         });
-        //Add labels to panel
-        createPanel.add(instructionLabel);
-        createPanel.add(nameLabel);
-        createPanel.add(nameTextField);
-        createPanel.add(imageLabel);
-        createPanel.add(joinButton);
-        createPanel.add(fileChooser);
-        frame.getContentPane().removeAll();
-        frame.add(createPanel);
-        frame.setVisible(true);
-    }
+        home.add(createButton);
 
+        JLabel loginLabel = new JLabel("Log Into Account");
+        loginLabel.setBounds(380,175,140,20);
+        home.add(loginLabel);
 
-    public void buildSearchPanel(){
-        searchPanel = new JPanel(new FlowLayout());
-        mainPanel = new JPanel(new FlowLayout());
-        JLabel searchLabel = new JLabel("Search:");
-        JTextField searchText = new JTextField(10);
-
-        //Match label with text
-        searchLabel.setLabelFor(searchText);
-
-        //Add label and text to panel
-        searchPanel.add(searchLabel, FlowLayout.LEFT);
-        searchPanel.add(searchText);
-
-        //Create button
-        JButton button = new JButton("Search");
-        button.addActionListener(new ActionListener() {
+        JButton loginButton = new JButton("Login");
+        loginButton.setBounds(385,205,100,20);
+        loginButton.addActionListener(new ActionListener()
+        {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String s = searchText.getText();            //Gets String of textfield
-                Database d = manager.searchProfile(s);      //Gets profile of user and store it in Database object
-
-                JLabel name = new JLabel(d.name);
-                JLabel status = new JLabel(d.status);
-
-                System.out.println(d.name + " " + d.status);
-                System.out.println(s);
-
-                //Remove all old data before adding new info to panel
-                mainPanel.removeAll();
-
-                mainPanel.add(name);
-                mainPanel.add(status);
-
-                mainPanel.revalidate();
-                mainPanel.repaint();
-
+            public void actionPerformed(ActionEvent e)
+            {
+                Login();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(login);
+                frame.setVisible(true);
             }
         });
-
-        //Add button to panel
-        searchPanel.add(button);
-
+        home.add(loginButton);
     }
 
-    /**
-     * Shows the friends list and aligns it downward
-     * */
-    public void buildFriendAndMainPanel(){
-        friendListPanel = new JPanel();
-        mainPanel = new JPanel(new BorderLayout());
+    //Construct application create profile page
+    public void Create()
+    {
+        create = new JPanel();
+        create.setLayout(null);
 
-        buildFriends();                             //Gets a sample of friends
-        ArrayList<Database> f = model.getFriends(); //List of user's friends
-        //TODO:Make every friend a button
-        Box bv = Box.createVerticalBox();       //Create box for friend list
-        Box bv2 = Box.createVerticalBox();      //Create box friend's friend list
-        JButton button;                         //Button for friend name
-        /**
-         * When friend button is pressed, it gives adds their info into a JPanel.
-         * The JPanel has name, status, and their friend's list
-         * @param e the button pressed
-         * */
-        for (Database database : f) {                         //Each database obj is f(i)
-            button = new JButton(database.getName());         //A button with a name
-            bv.add(button);                                   //Adds button vertically
-            button.addActionListener(new ActionListener() {
-                /**
-                 * When friend button is pressed, it gives adds their info into a JPanel.
-                 * The JPanel has name, status, and their friend's list
-                 * @param e the button pressed
-                 * */
-                @Override
-                public void actionPerformed(ActionEvent e) {                     //Button pressed gives user info
-                    String action = e.getActionCommand();
-                    String friendName = manager.searchProfile(action).getName(); //Friend Name
-                    String s = manager.searchProfile(action).getStatus();        //Friend status
-                    int totalProfiles = manager.getProfilesCount();              //Total number of profiles
+        JLabel greetingLabel = new JLabel("Create A New Account");
+        greetingLabel.setBounds(285,25,215,20);
+        create.add(greetingLabel);
 
-                    JLabel name = new JLabel("Name: " + friendName);        //Friend name label
-                    JLabel status = new JLabel("Status: " + s + "\n");      //Friend status label
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setBounds(240,80,80,25);
+        create.add(nameLabel);
 
-                    //Remove all old stuff in main panel
-                    mainPanel.removeAll();
+        JTextField nameTextField = new JTextField(10);
+        nameTextField.setBounds(283,80,165,25);
+        create.add(nameTextField);
 
-                    //Add to panel
-                    mainPanel.add(name, BorderLayout.CENTER);
-                    mainPanel.add(status, BorderLayout.CENTER);
-                    mainPanel.revalidate();
-                    mainPanel.repaint();
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(218,120,80,25);
+        create.add(passwordLabel);
 
-                    System.out.println("Currently viewing: " + friendName);
+        JTextField passwordTextField = new JTextField(10);
+        passwordTextField.setBounds(283,120,165,25);
+        create.add(passwordTextField);
 
-                    //Total number of friends your friend has
-                    int friendTotal = manager.searchProfile(friendName).friendDatabases.size();
+        JLabel imageLabel = new JLabel("Select Profile Image:");
+        imageLabel.setBounds(153, 160, 127, 25);
+        create.add(imageLabel);
 
-                    //Create friend's friend list
-                    JLabel theirFriendList = new JLabel(friendName + "'s Friends List");
-                    bv2.add(theirFriendList);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setBounds(290, 151, 300, 275);
+        create.add(fileChooser);
 
-                    //Make button for every friend if they have any
-                    if(friendTotal > 0){
-                        for (int i = 0; i < friendTotal; i++) {
-                            String friendsFriendName = manager.searchProfile(friendName).friendDatabases.get(i).getName();
-                            JButton fButton =  new JButton(friendsFriendName);        //Button for friend's friend name
-                            bv2.add(fButton);
-                            System.out.println("Friend of Friend:" + friendsFriendName);
-                        }
-                    }
-                    else
-                        bv2.add(new JLabel("Currently has no friends."));
-                }
-            });
+        JButton createButton = new JButton("Create");
+        createButton.setBounds(188, 200, 100, 25);
+        createButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Dashboard();
+                model.profile.setName(nameTextField.getText());
+                model.profile.setPassword(passwordTextField.getText());
+                frame.getContentPane().removeAll();
+                frame.add(dashboard);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        create.add(createButton);
+
+        JButton previousButton = new JButton("Previous...");
+        previousButton.setBounds(50, 350, 100, 25);
+        previousButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Home();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(home);
+                frame.setVisible(true);
+            }
+        });
+        create.add(previousButton);
+    }
+
+    //Construct application login page
+    public void Login()
+    {
+        login = new JPanel();
+        login.setLayout(null);
+
+        JLabel greetingLabel = new JLabel("Log Into Account");
+        greetingLabel.setBounds(285,25,215,20);
+        login.add(greetingLabel);
+
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setBounds(240,100,80,25);
+        login.add(nameLabel);
+
+        JTextField nameTextField = new JTextField(10);
+        nameTextField.setBounds(283,100,165,25);
+        login.add(nameTextField);
+
+        JLabel imageLabel = new JLabel("Password:");
+        imageLabel.setBounds(218, 140, 127, 25);
+        login.add(imageLabel);
+
+        JTextField passwordTextField = new JTextField(10);
+        passwordTextField.setBounds(283,140,165,25);
+        login.add(passwordTextField);
+
+        JButton loginButton = new JButton("Login");
+        loginButton.setBounds(286, 180, 100, 25);
+        loginButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Dashboard();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(dashboard);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+        login.add(loginButton);
+
+        JButton previousButton = new JButton("Previous...");
+        previousButton.setBounds(50, 350, 100, 25);
+        previousButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Home();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(home);
+                frame.setVisible(true);
+            }
+        });
+        login.add(previousButton);
+    }
+
+    JButton button;
+    public void Dashboard()
+    {
+        dashboard = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        //Resize Profile Picture
+        JLabel image = new JLabel();
+        image.setBounds(0,0,200,200);
+        ImageIcon logo = new ImageIcon("logo.jpg");
+        Image img = logo.getImage();
+        Image sized = img.getScaledInstance(image.getWidth(),image.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon sizedImage = new ImageIcon(sized);
+        image.setIcon(sizedImage);
+
+        //Profile picture
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(10,10,10,10);
+        dashboard.add(image, c);
+
+        //Name
+        c.gridx = 0;
+        c.gridy = 1;
+        dashboard.add(new JLabel("Name: Sair Abbas"), c);
+
+        //Status
+        c.gridx = 0;
+        c.gridy = 2;
+        dashboard.add(new JLabel("Status: Online"), c);
+
+        //Friends
+        c.gridx = 0;
+        c.gridy = 3;
+        dashboard.add(new JLabel("Friends: 10"), c);
+
+        //Edit
+        JButton editButton = new JButton("Edit Profile");
+        editButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Edit();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(edit);
+                frame.setVisible(true);
+            }
+        });
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 4;
+        dashboard.add(editButton, c);
+
+        //Logout
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                View view1 = new View();
+            }
+        });
+        c.gridx = 0;
+        c.gridy = 5;
+        dashboard.add(logoutButton, c);
+
+        //Search Bar
+        c.anchor = GridBagConstraints.NORTH;
+        c.insets = new Insets(10,10,10,10);
+        c.gridx = 1;
+        c.gridy = 0;
+        dashboard.add(new JTextField(12), c);
+        c.insets = new Insets(35,10,10,10);
+        dashboard.add(new JButton("Search Name"), c);
+
+        //Feed
+        c.gridx = 1;
+        for (int i = 0; i < 4; i++)
+        {
+            JLabel image1 = new JLabel();
+            image1.setBounds(0,0,100,100);
+            ImageIcon logo1 = new ImageIcon("logo.jpg");
+            Image img1 = logo1.getImage();
+            Image sized1 = img1.getScaledInstance(image1.getWidth(),image1.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon sizedImage1 = new ImageIcon(sized1);
+            image1.setIcon(sizedImage1);
+            dashboard.add(image1, c);
         }
+    }
+    //Edit profile application page
+    public void Edit()
+    {
 
-        //TODO:When you click on a friend, show their info
-
-        //Remove previous friend list panel
-        friendListPanel.removeAll();
-
-        //Add buttons to panel
-        friendListPanel.add(bv);
-        friendListPanel.revalidate();
-        friendListPanel.repaint();
-
-        mainPanel.add(bv2, BorderLayout.CENTER);
     }
 
-    /**
-     * Makes profiles and friends to test out program.
-     * Currently idoes not use graphs to add/friend. Uses ArrayList.
-     * */
-    public void buildFriends(){
-        //Make users
-        Database d1 = new Database(); //Daniel
-        Database d2 = new Database(); //Sair
-        Database d3 = new Database(); //Josh
-        Database d4 = new Database(); //Alexis
-
-        //Set up their profile
-        d1.setName("Daniel", "Tran");
-        d2.setName("Sair", "Abbas");
-        d3.setName("Josh", "Sjah");
-        d4.setName("Alexis", "Arroyo");
-
-        d1.setStatus("online");
-        d2.setStatus("still here (dog)");
-        d3.setStatus("playing ms");
-        d4.setStatus("offline");
-
-        //Add friends
-        d1.addFriend(d2); //Daniel x Sair lmao
-        d1.addFriend(d3); //Daniel x Josh
-        d3.addFriend(d4); //Josh x Alexis
-        d4.addFriend(d3); //Alexis x Josh
-
-        //Add them to database
-        model.addFriend(d1);
-        model.addFriend(d2);
-        model.addFriend(d3);
-        model.addFriend(d4);
-
-        //Add them to graph
-        manager.addProfile(d1);
-        manager.addProfile(d2);
-        manager.addProfile(d3);
-        manager.addProfile(d4);
-
-        manager.createFriendship(d1, d2); //Daniel --- Sair
-        manager.createFriendship(d1, d3); //Daniel --- Josh
-        manager.createFriendship(d3, d4); //Josh --- Alexis
-        manager.createFriendship(d4, d2); //Alexis --- Sair
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        frame.revalidate();
+        frame.repaint();
     }
-
-    public class HandleActionEventsForJButton extends JFrame implements ActionListener{
-
-        HandleActionEventsForJButton() {
-            //Set flow layout for the frame
-            this.getContentPane().setLayout(new BorderLayout(10, 5)); //hGap, vGap;
-
-            //Build the labels
-            JLabel firstName = new JLabel("First Name: " + model.name);
-            JLabel lastName = new JLabel("Last Name: ");
-            JLabel status = new JLabel("Status: " + model.status);
-
-            //Build the profile pic
-            ImageIcon img = new ImageIcon(model.getProfilePicture());
-            Image scaleImg = img.getImage().getScaledInstance(50,50, Image.SCALE_DEFAULT);
-            ImageIcon newImg = new ImageIcon(scaleImg);
-            JLabel image = new JLabel(newImg);
-
-            //Build the buttons
-            JButton createButton = new JButton("Create Profile");
-            JButton editButton = new JButton("Edit Profile");
-            JButton addButton = new JButton("Add Friend");
-            JButton joinButton = new JButton("Join Network");
-            JButton leaveButton = new JButton("Leave Network");
-
-            //Align the buttons vertically
-            Box bv = Box.createVerticalBox();
-            bv.add(createButton);
-            bv.add(editButton);
-            bv.add(addButton);
-            bv.add(joinButton);
-            bv.add(leaveButton);
-            bv.add(image);
-            bv.add(firstName);
-            bv.add(lastName);
-            bv.add(status);
-
-            //Set action listeners for buttons
-            createButton.addActionListener(this);
-            editButton.addActionListener(this);
-            addButton.addActionListener(this);
-            joinButton.addActionListener(this);
-            leaveButton.addActionListener(this);
-
-            //Add buttons to the frame
-            add(bv, BorderLayout.WEST); //Buttons stored in bv align down and to the left
-        }
-
-        /**
-         * When a button pressed, calls a method/class object to run a new window or page.
-         * @param ae the act of clicking button
-         * */
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-            String action = ae.getActionCommand();
-
-            //Opens a new Frame to enter user info
-            if (action.equals("Create Profile")) {
-                new ProfileForm(model);
-            }
-            else if (action.equals("Edit Profile")) {
-                System.out.println("Edit Button pressed!");
-            }
-            else if (action.equals("Add Friend")) {
-                System.out.println("Add Button pressed!");
-            }
-            else if (action.equals("Join Network")) {
-                CreateView();
-            }
-            else if (action.equals("Leave Network")) {
-                System.out.println("Leave Button pressed!");
-            }
-        }
-    }
-
 }
-

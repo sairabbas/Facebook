@@ -1,51 +1,52 @@
 import java.util.*;
 
 public class Graph {
-     Map<Database, List<Database>> map = new HashMap<>();
+     Map<Model.Profile, List<Model.Profile>> map = new HashMap<>();
 
     public Graph(){ }
 
-    public void addVertex(Database p){
-        map.put(p, new LinkedList<>());
+    public void addVertex(Model.Profile m){
+        map.put(m, new LinkedList<>());
     }
 
-    public void removeVertex(Database p){
-        if (!this.map.containsKey(p)) {
+    public void removeVertex(Model.Profile m){
+        if (!this.map.containsKey(m)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
 
-        this.map.remove(p);
+        this.map.remove(m);
 
-        for(Database u: this.getAllVertices()){
-            this.map.get(u).remove(p);
+        for(Model.Profile u: this.getAllVertices()){
+            this.map.get(u).remove(m);
         }
     }
 
-    public void addEdge(Database p1, Database p2){
-        if(!map.containsKey(p1))
-            addVertex(p1);
+    public void addEdge(Model.Profile m1, Model.Profile m2){
+        if(!map.containsKey(m1))
+            addVertex(m1);
 
-        if(!map.containsKey(p2))
-            addVertex(p2);
+        if(!map.containsKey(m2))
+            addVertex(m2);
 
-        map.get(p1).add(p2);
-        map.get(p2).add(p1);
+        map.get(m1).add(m2);
+        map.get(m2).add(m1);
     }
 
-    public void removeEdge(Database p1, Database p2){
+    public void removeEdge(Model.Profile m1, Model.Profile m2){
 
-        List<Database> edgeV1 = map.get(p1);
-        List<Database> edgeV2 = map.get(p2);
+        List<Model.Profile> edgeV1 = map.get(m1);
+        List<Model.Profile> edgeV2 = map.get(m2);
 
         if(edgeV1 != null)
-            edgeV1.remove(p2);
+            edgeV1.remove(m2);
 
         if(edgeV2 != null)
-            edgeV2.remove(p1);
+            edgeV2.remove(m1);
     }
 
-    public List<Database> getAdjVertices(Database p){
-        return map.get(new Database());
+    public List<Model.Profile> getAdjVertices(Model.Profile p)
+    {
+        return map.get(new Model());
     }
 
     public int getVertexCount(){
@@ -56,7 +57,7 @@ public class Graph {
     public void getEdgesCount(boolean bidirection)
     {
         int count = 0;
-        for (Database v : map.keySet()) {
+        for (Model.Profile v : map.keySet()) {
             count += map.get(v).size();
         }
         if (bidirection) {
@@ -67,19 +68,19 @@ public class Graph {
                 + " edges.");
     }
 
-    public Iterable<Database> getAllVertices() { //Get all vertices in the graph
+    public Iterable<Model.Profile> getAllVertices() { //Get all vertices in the graph
         return this.map.keySet();
     }
 
-    public Iterable<Database> getNeighbors(Database p){ //Get connected vertices of the vertex
+    public Iterable<Model.Profile> getNeighbors(Model p){ //Get connected vertices of the vertex
         return this.map.get(p);
     }
 
-    public boolean isConnected(Database p1, Database p2){
+    public boolean isConnected(Model.Profile p1, Model.Profile p2){
         return this.map.get(p1).contains(p2);
     }
 
-    public void hasVertex(Database p)
+    public void hasVertex(Model.Profile p)
     {
         if (map.containsKey(p)) {
             System.out.println("The graph contains "
@@ -91,7 +92,7 @@ public class Graph {
         }
     }
 
-    public void hasEdge(Database p1, Database p2)
+    public void hasEdge(Model.Profile p1, Model.Profile p2)
     {
         if (map.get(p1).contains(p2)) {
             System.out.println("The graph has an edge between "
@@ -104,16 +105,16 @@ public class Graph {
     }
 
 
-    public Set<Database> dfs(Graph graph, Database root){
-        Set<Database> visited = new LinkedHashSet<>();
-        Stack<Database> stack = new Stack<>();
+    public Set<Model.Profile> dfs(Graph graph, Model.Profile root){
+        Set<Model.Profile> visited = new LinkedHashSet<>();
+        Stack<Model.Profile> stack = new Stack<>();
         stack.push(root);
 
         while(!stack.isEmpty()){
-            Database vertex = stack.pop();
+            Model.Profile vertex = stack.pop();
             if(!visited.contains(vertex)){
                 visited.add(vertex);
-                for(Database v: graph.getAdjVertices(vertex)){
+                for(Model.Profile v: graph.getAdjVertices(vertex)){
                     stack.push(v);
                 }
             }
@@ -121,16 +122,16 @@ public class Graph {
         return visited;
     }
 
-    public Set<Database> bfs(Graph graph, Database root){
-        Set<Database> visited = new LinkedHashSet<>();
-        Queue<Database> queue = new LinkedList<>();
+    public Set<Model.Profile> bfs(Graph graph, Model.Profile root){
+        Set<Model.Profile> visited = new LinkedHashSet<>();
+        Queue<Model.Profile> queue = new LinkedList<>();
 
         queue.add(root);
         visited.add(root);
 
         while(!queue.isEmpty()){
-            Database vertex = queue.poll();
-            for(Database v: graph.getAdjVertices(vertex)) {
+            Model.Profile vertex = queue.poll();
+            for(Model.Profile v: graph.getAdjVertices(vertex)) {
                 if(!visited.contains(v)){
                     visited.add(v);
                     queue.add(v);
@@ -140,16 +141,18 @@ public class Graph {
         return visited;
     }
 
+    /*
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
 
-        for (Database v : map.keySet()) {
+        for (Model v : map.keySet()) {
             builder.append(v.name).append(": ");
         }
 
         return (builder.toString());
     }
+     */
 
 
 }
