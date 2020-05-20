@@ -34,8 +34,8 @@ public class View implements Observer
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(edit);
-        //frame.pack();
+        frame.add(dashboard);
+        frame.pack();
         frame.setVisible(true);
     }
 
