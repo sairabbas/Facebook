@@ -66,7 +66,12 @@ public class Graph {
                 + count
                 + " edges.");
     }
+/*
+    public Iterable<Model> getAllVertices() { //Get all vertices in the graph
+        return this.map.keySet();
+    }
 
+ */
     public Iterable<Model> getAllVertices() { //Get all vertices in the graph
         return this.map.keySet();
     }

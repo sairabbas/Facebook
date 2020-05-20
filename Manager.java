@@ -90,9 +90,9 @@ public class Manager {
         for(Model u : users.getAllVertices()){
             if(u.getName().equals(name)){
                 System.out.println("User " + name +" found!");
-                System.out.println("Status: " + u.getStatus());
                 return u;
             }
+            System.out.println(u.getName());
         }
         System.out.println("User not found in Database Manager.");
         return v;

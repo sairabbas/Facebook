@@ -275,12 +275,11 @@ public class View implements Observer
 
         //Friends
         c.insets = new Insets(275,10,0,10);
-<<<<<<< HEAD
+
         dashboard.add(new JLabel("Total Friends: "
                 + manager.getFriendList(user).size()), c);
-=======
+
         dashboard.add(new JLabel("Friends: Daniel Tran"), c);
->>>>>>> 37c4c8bea7e7a4cb2a7d5676f70b74e874075f06
 
         //Edit
         c.insets = new Insets(300,10,0,10);
