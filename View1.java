@@ -38,6 +38,7 @@ public class View1 implements Observer
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(dashboard);
+        frame.pack();
         frame.setVisible(true);
     }
 
@@ -287,7 +288,10 @@ public class View1 implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                View1 view1 = new View1();
+                Home();
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(home);
+                frame.setVisible(true);
             }
         });
         dashboard.add(logoutButton, c);
@@ -306,7 +310,7 @@ public class View1 implements Observer
         for (int i = 0; i < 3; i++)
         {
             JLabel image1 = new JLabel();
-            image1.setBounds(0,0,85,85);
+            image1.setBounds(0,0,95,95);
             ImageIcon logo1 = new ImageIcon("logo.jpg");
             Image img1 = logo1.getImage();
             Image sized1 = img1.getScaledInstance(image1.getWidth(),image1.getHeight(), Image.SCALE_SMOOTH);
@@ -314,7 +318,7 @@ public class View1 implements Observer
             image1.setIcon(sizedImage1);
             dashboard.add(image1, c);
             JLabel nameLabel = new JLabel("Daniel Tran");
-            top = top + 85;
+            top = top + 95;
             c.insets = new Insets(top ,10,0,10);
         }
     }
