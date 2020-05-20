@@ -27,15 +27,25 @@ public class View implements Observer
         Home();
         Create();
         Login();
+<<<<<<< HEAD
         //Dashboard(model);
+=======
+        Edit();
+        Dashboard(new Model());
+>>>>>>> a20df7df271ceacf80de308c90c93e081ce38cde
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+<<<<<<< HEAD
         //frame.add(dashboard);
         frame.add(home);
         //frame.pack();
+=======
+        frame.add(dashboard);
+        frame.pack();
+>>>>>>> a20df7df271ceacf80de308c90c93e081ce38cde
         frame.setVisible(true);
     }
 
@@ -349,6 +359,14 @@ public class View implements Observer
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(friendsLabel, c);
             JButton addButton = new JButton("+ Add Friend");
+            addButton.addActionListener(new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+
+                }
+            });
             c.insets = new Insets(topAdd ,260,0,10);
             dashboard.add(addButton, c);
             topImage = topImage + 100;
@@ -360,7 +378,71 @@ public class View implements Observer
     //Edit profile application page
     public void Edit()
     {
+        edit = new JPanel();
+        edit.setLayout(null);
 
+        JLabel greetingLabel = new JLabel("Edit Your Account");
+        greetingLabel.setBounds(285,25,215,20);
+        edit.add(greetingLabel);
+
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setBounds(240,80,80,25);
+        edit.add(nameLabel);
+
+        JTextField nameTextField = new JTextField(10);
+        nameTextField.setBounds(283,80,165,25);
+        edit.add(nameTextField);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(218,120,80,25);
+        edit.add(passwordLabel);
+
+        JTextField passwordTextField = new JTextField(10);
+        passwordTextField.setBounds(283,120,165,25);
+        edit.add(passwordTextField);
+
+        JLabel imageLabel = new JLabel("Select Profile Image:");
+        imageLabel.setBounds(153, 160, 127, 25);
+        edit.add(imageLabel);
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setBounds(290, 151, 300, 275);
+        edit.add(fileChooser);
+
+        JButton applyButton = new JButton("Apply Changes");
+        applyButton.setBounds(165, 200, 120, 25);
+        applyButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //model.setName(nameTextField.getText());
+                //model.setPassword(passwordTextField.getText());
+                manager.addAccount(nameTextField.getText(),
+                        passwordTextField.getText(),
+                        fileChooser.getSelectedFile());
+                frame.getContentPane().removeAll();
+                Dashboard(model);
+                frame.add(dashboard);
+                frame.setVisible(true);
+            }
+        });
+        edit.add(applyButton);
+
+        JButton previousButton = new JButton("Cancel...");
+        previousButton.setBounds(50, 350, 100, 25);
+        previousButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Dashboard(model);
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(dashboard);
+                frame.setVisible(true);
+            }
+        });
+        edit.add(previousButton);
     }
 
     @Override
