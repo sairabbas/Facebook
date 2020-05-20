@@ -7,6 +7,6 @@ public class App
         //Declare model object
         Model model = new Model();
         //Declare view object
-        View1 view = new View1();
+        View view = new View();
     }
 }
