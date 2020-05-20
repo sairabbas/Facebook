@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="546b539c-e24e-42cf-85a4-73c6caa7ebbd" name="Default Changelist" comment="has search panel. IN PROGRESS">
       <change beforePath="$PROJECT_DIR$/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Database.java" beforeDir="false" />
@@ -11,6 +12,18 @@
       <change beforePath="$PROJECT_DIR$/TestProfile.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/View.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/View1.java" beforeDir="false" />
+=======
+    <list default="true" id="60e7c14a-cf4c-4be6-8dbe-be4195b9d321" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/View1.java" beforeDir="false" afterPath="$PROJECT_DIR$/View1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MockFB/View1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MockFB/View1.class" afterDir="false" />
+>>>>>>> d0c2a6ceb8adea16327cf3e225d517bc59fa057e
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,6 +145,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="has search panel. IN PROGRESS" />
   </component>
   <component name="WindowStateProjectService">
+<<<<<<< HEAD
     <state x="781" y="82" key="#Notifications" timestamp="1589084698932">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -264,5 +278,56 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="603" y="237" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1536.824@0.0.1920.1040" timestamp="1589161403134" />
+=======
+    <state x="246" y="23" width="1024" height="821" key="#Project_Structure" timestamp="1588925143256">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="246" y="23" width="1024" height="821" key="#Project_Structure/0.23.1440.821@0.23.1440.821" timestamp="1588925143256" />
+    <state x="533" y="172" key="#com.intellij.ide.util.MemberChooser" timestamp="1589936847156">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="533" y="163" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1588832837056" />
+    <state x="533" y="172" key="#com.intellij.ide.util.MemberChooser/0.23.1440.821@0.23.1440.821" timestamp="1589936847156" />
+    <state x="496" y="189" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1588924394787">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="496" y="189" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.821@0.23.1440.821" timestamp="1588924394787" />
+    <state x="458" y="187" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1589933962464">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="458" y="187" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.23.1440.821@0.23.1440.821" timestamp="1589933962464" />
+    <state width="802" height="150" key="GridCell.Tab.0.bottom" timestamp="1590009657749">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="144" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588876451338" />
+    <state width="802" height="150" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1590009657749" />
+    <state width="802" height="150" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1590007314500" />
+    <state width="802" height="150" key="GridCell.Tab.0.center" timestamp="1590009657748">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="144" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1588876451337" />
+    <state width="802" height="150" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1590009657748" />
+    <state width="802" height="150" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1590007314499" />
+    <state width="802" height="150" key="GridCell.Tab.0.left" timestamp="1590009657748">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="144" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1588876451337" />
+    <state width="802" height="150" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1590009657748" />
+    <state width="802" height="150" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1590007314499" />
+    <state width="802" height="150" key="GridCell.Tab.0.right" timestamp="1590009657749">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state width="1398" height="144" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1588876451338" />
+    <state width="802" height="150" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1590009657749" />
+    <state width="802" height="150" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1590007314499" />
+    <state x="260" y="74" key="SettingsEditor" timestamp="1588888095233">
+      <screen x="0" y="23" width="1440" height="821" />
+    </state>
+    <state x="260" y="74" key="SettingsEditor/0.23.1440.821@0.23.1440.821" timestamp="1588888095233" />
+    <state x="385" y="169" width="670" height="676" key="search.everywhere.popup" timestamp="1589855201289">
+      <screen x="0" y="23" width="1440" height="822" />
+    </state>
+    <state x="385" y="169" width="670" height="676" key="search.everywhere.popup/0.23.1440.822@0.23.1440.822" timestamp="1589855201289" />
+>>>>>>> d0c2a6ceb8adea16327cf3e225d517bc59fa057e
   </component>
 </project>
