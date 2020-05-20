@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.util.Observable;
 
-public class Model1 extends Observable
+public class Model extends Observable
 {
     Profile profile = new Profile();
     public class Profile
