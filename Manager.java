@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +65,12 @@ public class Manager {
         users.addVertex(m);
     }
 
+    public Set<Model> getMutualFriends(Model root){
+        Set<Model> mutuals;
+        mutuals = users.bfs(users, root);
+
+        return mutuals;
+    }
 
     public void setUsername(Model m, String name){
         if(accounts.containsKey(m.getName()))
@@ -72,7 +79,8 @@ public class Manager {
 
     public void setPicture(Model m, File file){
         if(pictures.containsKey(m.getName())){
-            pictures.replace(m.getName(), m.getImage(), new ImageIcon(String.valueOf(file)));
+            //pictures.replace(m.getName(), m.getImage(), new ImageIcon(String.valueOf(file)));
+            pictures.put(m.getName(), new ImageIcon(String.valueOf(file)));
         }
     }
 
@@ -142,5 +150,6 @@ public class Manager {
         friends = this.users.getAdjVertices(startPoint);
         return friends;
     }
+
 
 }

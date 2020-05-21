@@ -49,6 +49,7 @@ public class Graph {
         return map.get(p);
     }
 
+
     public int getVertexCount(){
         return map.keySet().size();
     }

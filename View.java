@@ -327,6 +327,7 @@ public class View implements Observer
         c.insets = new Insets(35,10,0,10);
         dashboard.add(new JButton("Search Name"), c);
 
+
         //Feed
         int topImage = 73;
         int topInfo = 92;
@@ -349,14 +350,17 @@ public class View implements Observer
             StringBuilder mutualfriends = new StringBuilder();
             int count = 0;
             Model u = otherUsers.get(i);
+
             for(Model m: manager.getFriendList(user))
             {
-                if(!m.equals(u))
+                if(!m.equals(u) && user.getName().equals(u.getName()))
                     mutualfriends.append(m.getName()).append(" | ");
             }
+
+
             JLabel friendsLabel = new JLabel();
             if(!manager.getFriendList(user).isEmpty()){
-                friendsLabel = new JLabel("Friends with " + mutualfriends);
+                friendsLabel = new JLabel("Mutual Friends with: " + mutualfriends);
             }
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(nameLabel, c);
@@ -437,24 +441,18 @@ public class View implements Observer
 
                 if(!nameTextField.getText().isEmpty())
                     m.setName(nameTextField.getText());
+                    manager.setUsername(m, nameTextField.getText());
                 if(!statusTextField.getText().isEmpty())
                     m.setStatus(statusTextField.getText());
 
                 m.setImage(fileChooser.getSelectedFile());
-
-                //Change profile pic
-                JLabel image = new JLabel();
-                image.setBounds(0,0,200,200);
-                ImageIcon logo = manager.getPicture(m.getName());
-                Image img = logo.getImage();
-                Image sized = img.getScaledInstance(image.getWidth(),image.getHeight(), Image.SCALE_SMOOTH);
-                ImageIcon sizedImage = new ImageIcon(sized);
-                image.setIcon(sizedImage);
-
+                manager.setPicture(m, fileChooser.getSelectedFile());
+                System.out.println("Profile pic is " + fileChooser.getSelectedFile().getAbsolutePath());
 
                 Dashboard(m);
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(dashboard);
+                frame.getContentPane().revalidate();
                 frame.setVisible(true);
             }
         });
@@ -486,10 +484,10 @@ public class View implements Observer
 
     //TODO: TEST CASE 1: ADD FRIENDS AND MUTUAL FRIENDS
     public void buildFriends(){
-        manager.addAccount("daniel", "123", "Online", new File("logo.png"));
-        manager.addAccount("sair", "123", "Offline", new File("logo.png"));
-        manager.addAccount("josh", "123", "AFK", new File("logo.png"));
-        manager.addAccount("alexis", "123", "Offline", new File("logo.png"));
+        manager.addAccount("daniel", "123", "Online", new File("logo.jpg"));
+        manager.addAccount("sair", "123", "Offline", new File("logo.jpg"));
+        manager.addAccount("josh", "123", "AFK", new File("logo.jpg"));
+        manager.addAccount("alexis", "123", "Offline", new File("logo.jpg"));
 
         Model daniel = manager.searchProfile("daniel");
         Model sair = manager.searchProfile("sair");

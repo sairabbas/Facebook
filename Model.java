@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -9,9 +10,11 @@ public class Model extends Observable
 {
     private String name, status, password;
     private ImageIcon image;
+    private ArrayList<String> friends;
 
     public Model(){
         name = ""; status = ""; password = "";
+        friends = new ArrayList<>();
         image = null;
     }
 
@@ -24,8 +27,17 @@ public class Model extends Observable
     public void setPassword(String password) { this.password = password; }
     public String getPassword() { return password; }
 
+    public void addFriends(String name){
+        friends.add(name);
+        System.out.println("Added " + name);
+    }
+
     public void setImage(File image) { this.image = new ImageIcon(String.valueOf(image)); }
     public ImageIcon getImage() { return image; }
+
+    public boolean isFriendsWith(String name){
+        return friends.contains(name);
+    }
 
     public void update(Observable o, Object arg)
     {
