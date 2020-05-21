@@ -26,16 +26,12 @@ public class View implements Observer
     public View()
     {
         Home();
-        Create();
-
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         frame.add(home);
-
         frame.setVisible(true);
     }
 
@@ -217,7 +213,6 @@ public class View implements Observer
                     Dashboard(currentUser);
                     frame.getContentPane().removeAll();
                     frame.getContentPane().add(dashboard);
-                    frame.pack();
                     frame.setVisible(true);
                 }
             }
@@ -407,35 +402,20 @@ public class View implements Observer
         nameTextField.setBounds(283,50,165,25);
         edit.add(nameTextField);
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(218,90,80,25);
-        edit.add(passwordLabel);
-
-        JTextField passwordTextField = new JTextField(10);
-        passwordTextField.setBounds(283,90,165,25);
-        edit.add(passwordTextField);
-
         JLabel statusLabel = new JLabel("Status:");
-        statusLabel.setBounds(238,130,90,25);
+        statusLabel.setBounds(238,90,90,25);
         edit.add(statusLabel);
 
         JTextField statusTextField = new JTextField(10);
-        statusTextField.setBounds(283, 130, 165, 25);
+        statusTextField.setBounds(283, 90, 165, 25);
         edit.add(statusTextField);
 
         JLabel imageLabel = new JLabel("Select Profile Image:");
-        imageLabel.setBounds(153, 170, 127, 25);
+        imageLabel.setBounds(153, 130, 127, 25);
         edit.add(imageLabel);
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setBounds(290, 161, 300, 275);
-        fileChooser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                m.setImage(m.getImage());
-                Dashboard(m);
-            }
-        });
+        fileChooser.setBounds(290, 121, 300, 275);
         edit.add(fileChooser);
 
         JButton applyButton = new JButton("Apply Changes");
@@ -445,12 +425,16 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                m.setName(nameTextField.getText());
+                m.setStatus(statusTextField.getText());
+                m.setImage(fileChooser.getSelectedFile());
                 if(!nameTextField.getText().isEmpty())
                     m.setName(nameTextField.getText());
                 if(!statusTextField.getText().isEmpty())
                     m.setStatus(statusTextField.getText());
                 frame.getContentPane().removeAll();
                 Dashboard(m);
+                frame.getContentPane().removeAll();
                 frame.getContentPane().add(dashboard);
                 frame.setVisible(true);
             }

@@ -38,7 +38,7 @@ public class Manager {
             Model m = new Model();
             m.setName(name);
             m.setStatus(status);
-            m.setImage(new ImageIcon(String.valueOf(file)));
+            m.setImage(new File(String.valueOf(file)));
             users.addVertex(m);
             pictures.put(name, new ImageIcon(String.valueOf(file)));
     }
