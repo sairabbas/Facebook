@@ -274,7 +274,6 @@ public class View implements Observer
 
         //Name
         c.insets = new Insets(225,10,0,10);
-        //dashboard.add(new JLabel("Name: Sair Abbas"), c);
         dashboard.add(new JLabel("Name: " + name), c);
 
         //Status
@@ -283,9 +282,6 @@ public class View implements Observer
 
         //Friends
         c.insets = new Insets(275,10,0,10);
-
-        //dashboard.add(new JLabel("Total Friends: "
-         //       + manager.getFriendList(user).size()), c);
 
         dashboard.add(new JLabel("Total Friends: " + manager.getFriendList(user).size()), c);
 
