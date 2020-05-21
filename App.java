@@ -18,9 +18,13 @@ public class App
         Model m3 = new Model();
         Model m4 = new Model();
 
-        m1.setName("Daniel Tran");
-        m1.setStatus("Hello");
-        m1.setName("Daniel Tran");
-        m1.setStatus("Hello");
+
+        manager.addProfile(m1);
+        manager.addProfile(m2);
+        manager.addProfile(m3);
+        manager.addProfile(m4);
+
+        manager.createFriendship(m1,m2);
+        manager.createFriendship(m2,m3);
     }
 }

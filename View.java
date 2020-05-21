@@ -28,26 +28,14 @@ public class View implements Observer
         Home();
         Create();
 
-        //Dashboard(model);
-
-        //Edit();
-        //Dashboard(new Model());
-
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        //frame.add(dashboard);
         frame.add(home);
-        //frame.pack();
 
-        //frame.add(dashboard);
-        //frame.pack();
-
-        //frame.add(edit);
-        //frame.pack();
         frame.setVisible(true);
     }
 
