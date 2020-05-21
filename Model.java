@@ -8,7 +8,7 @@ import java.util.Observable;
 public class Model extends Observable
 {
     private String name, status, password;
-    private File image;
+    private ImageIcon image;
 
     public Model(){
         name = ""; status = ""; password = "";
@@ -24,8 +24,8 @@ public class Model extends Observable
     public void setPassword(String password) { this.password = password; }
     public String getPassword() { return password; }
 
-    public void setImage(File image) { this.image = image; }
-    public File getImage() { return image; }
+    public void setImage(File image) { this.image = new ImageIcon(String.valueOf(image)); }
+    public ImageIcon getImage() { return image; }
 
     public void update(Observable o, Object arg)
     {

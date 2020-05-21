@@ -26,6 +26,7 @@ public class View implements Observer
     //Display application home page
     public View()
     {
+        buildFriends();
         Home();
         model.addObserver(this);
         frame = new JFrame();
@@ -209,7 +210,7 @@ public class View implements Observer
                 String name = nameTextField.getText();
                 if(manager.login(name, passwordTextField.getText()))
                 {
-                    Model currentUser = new Model();
+                    Model currentUser;
                     currentUser = manager.searchProfile(name);
                     Dashboard(currentUser);
                     frame.getContentPane().removeAll();
@@ -253,7 +254,6 @@ public class View implements Observer
         //Resize Profile Picture
         JLabel image = new JLabel();
         image.setBounds(0,0,200,200);
-        //ImageIcon logo = new ImageIcon("logo.jpg");
         ImageIcon logo = manager.getPicture(user.getName());
         Image img = logo.getImage();
         Image sized = img.getScaledInstance(image.getWidth(),image.getHeight(), Image.SCALE_SMOOTH);
@@ -279,7 +279,12 @@ public class View implements Observer
         //Friends
         c.insets = new Insets(275,10,0,10);
 
-        dashboard.add(new JLabel("Total Friends: " + manager.getFriendList(user).size()), c);
+        StringBuilder friends = new StringBuilder();
+        for(Model m: manager.getFriendList(user))
+        {
+            friends.append(m.getName()).append(" | ");
+        }
+        dashboard.add(new JLabel("Friends: " + friends), c);
 
         //Edit
         c.insets = new Insets(300,10,0,10);
@@ -327,12 +332,13 @@ public class View implements Observer
         int topInfo = 92;
         int topAdd = 105;
         c.insets = new Insets(topImage,10,0,10);
-        for (int i = 0; i < manager.getAllUsers(name).size(); i++)
+        for (int i = 0; i < manager.getAllUsers(name).size(); i++) //Displays other users
         {
             ArrayList<Model> otherUsers = manager.getAllUsers(name);
             JLabel image1 = new JLabel();
             image1.setBounds(0,0,95,95);
-            ImageIcon logo1 = new ImageIcon("logo.jpg");
+            ImageIcon logo1 = new ImageIcon(String.valueOf(manager.getPicture(otherUsers.get(i).getName())));
+
             Image img1 = logo1.getImage();
             Image sized1 = img1.getScaledInstance(image1.getWidth(),image1.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon sizedImage1 = new ImageIcon(sized1);
@@ -340,19 +346,17 @@ public class View implements Observer
             dashboard.add(image1, c);
             JLabel nameLabel = new JLabel("Name: " + manager.getAllUsers(name).get(i).getName());
             JLabel statusLabel = new JLabel("Status: " + manager.getAllUsers(name).get(i).getStatus());
-            StringBuilder friends = new StringBuilder();
+            StringBuilder mutualfriends = new StringBuilder();
             int count = 0;
+            Model u = otherUsers.get(i);
             for(Model m: manager.getFriendList(user))
             {
-                if(count == 0 || count == manager.getFriendList(user).size())
-                    friends.append(m.getName()).append(" ");
-                else
-                    friends.append(m.getName()).append(", ");
-                count++;
+                if(!m.equals(u))
+                    mutualfriends.append(m.getName()).append(" | ");
             }
             JLabel friendsLabel = new JLabel();
             if(!manager.getFriendList(user).isEmpty()){
-                friendsLabel = new JLabel("Friends with " + friends);
+                friendsLabel = new JLabel("Friends with " + mutualfriends);
             }
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(nameLabel, c);
@@ -372,8 +376,12 @@ public class View implements Observer
                 public void actionPerformed(ActionEvent e)
                 {
                     manager.createFriendship(user, otherUsers.get(finalI));
-                    dashboard.revalidate();
-                    Dashboard(manager.searchProfile(name)); //refreshes Dashboard with new info
+                    frame.getContentPane().removeAll();
+
+                    Dashboard(manager.searchProfile(name));
+                    frame.getContentPane().add(dashboard);
+                    frame.getContentPane().revalidate();
+
                     System.out.println(user.getName() +" added " + otherUsers.get(finalI).getName());
                 }
             });
@@ -426,18 +434,26 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //m.setName(nameTextField.getText());
-                //m.setStatus(statusTextField.getText());
 
                 if(!nameTextField.getText().isEmpty())
                     m.setName(nameTextField.getText());
                 if(!statusTextField.getText().isEmpty())
                     m.setStatus(statusTextField.getText());
-                manager.setPicture(m.getName(), fileChooser.getSelectedFile());
-                    //manager.searchProfile(m.getName()).setImage(fileChooser.getSelectedFile());
-                frame.getContentPane().removeAll();
+
+                m.setImage(fileChooser.getSelectedFile());
+
+                //Change profile pic
+                JLabel image = new JLabel();
+                image.setBounds(0,0,200,200);
+                ImageIcon logo = manager.getPicture(m.getName());
+                Image img = logo.getImage();
+                Image sized = img.getScaledInstance(image.getWidth(),image.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon sizedImage = new ImageIcon(sized);
+                image.setIcon(sizedImage);
+
+
                 Dashboard(m);
-                //frame.getContentPane().removeAll();
+                frame.getContentPane().removeAll();
                 frame.getContentPane().add(dashboard);
                 frame.setVisible(true);
             }
@@ -465,5 +481,25 @@ public class View implements Observer
     {
         frame.revalidate();
         frame.repaint();
+    }
+
+
+    //TODO: TEST CASE 1: ADD FRIENDS AND MUTUAL FRIENDS
+    public void buildFriends(){
+        manager.addAccount("daniel", "123", "Online", new File("logo.png"));
+        manager.addAccount("sair", "123", "Offline", new File("logo.png"));
+        manager.addAccount("josh", "123", "AFK", new File("logo.png"));
+        manager.addAccount("alexis", "123", "Offline", new File("logo.png"));
+
+        Model daniel = manager.searchProfile("daniel");
+        Model sair = manager.searchProfile("sair");
+        Model josh = manager.searchProfile("josh");
+        Model alexis = manager.searchProfile("alexis");
+
+        manager.createFriendship(daniel, sair);
+        manager.createFriendship(daniel, josh);
+        manager.createFriendship(sair, josh);
+        manager.createFriendship(josh, alexis);
+
     }
 }

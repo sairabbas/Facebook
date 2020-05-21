@@ -33,7 +33,7 @@ public class Manager {
         if(accounts.containsKey(name))
             System.out.println("Username is already taken.");
         else
-            System.out.println("Name: " + name + " is registered.");
+            System.out.println(name + " is registered.");
             accounts.put(name, password);
             Model m = new Model();
             m.setName(name);
@@ -51,10 +51,10 @@ public class Manager {
     public boolean login(String name, String password){
         boolean flag = false;
         if(accounts.containsKey(name) && accounts.get(name).equals(password))
-            flag = true; //The username/pass existand matches
-        else if(!accounts.containsKey(name))
-            System.out.println("Invalid username.");
-        else if(!accounts.containsValue(password))
+            flag = true;
+        //else if(!accounts.containsKey(name))
+            //System.out.println("Invalid username.");
+        if(!accounts.containsValue(password))
             System.out.println("Invalid password.");
         return flag;
     }
@@ -64,11 +64,16 @@ public class Manager {
         users.addVertex(m);
     }
 
-    public void setPicture(String name, File file){
-        if(pictures.containsKey(name)){
-            pictures.replace(name, new ImageIcon(String.valueOf(file)));
-        }
 
+    public void setUsername(Model m, String name){
+        if(accounts.containsKey(m.getName()))
+            accounts.replace(m.getName(),name);
+    }
+
+    public void setPicture(Model m, File file){
+        if(pictures.containsKey(m.getName())){
+            pictures.replace(m.getName(), m.getImage(), new ImageIcon(String.valueOf(file)));
+        }
     }
 
     public ImageIcon getPicture(String name){
@@ -110,18 +115,17 @@ public class Manager {
     public boolean isFriends(Model user, Model otherUser){
         return users.isConnected(user, otherUser);
     }
+
     public Model searchProfile(String name){
         Model v = new Model();
 
         if(users.getAllVertices().isEmpty()){
-            System.out.println("User not found in Database Manager.");
+            System.out.println(name+ " is not found in Manager.");
         }
         for(Model u : users.getAllVertices()){
             if(u.getName().equals(name)){
-                System.out.println("User " + name +" found!");
                 return u;
             }
-            System.out.println(u.getName());
         }
         return v;
     }
@@ -133,14 +137,6 @@ public class Manager {
     public void createFriendship(Model user, Model friend) {
         users.addEdge(user, friend);
     }
-
-
-    /** Displays each profile's information and friends. */
-    /*
-    public Iterable<Database> getFriendList(Database startPoint) {
-        return this.allProfiles.getNeighbors(startPoint);
-    }
-     */
 
     public ArrayList<Model> getFriendList(Model startPoint) {
         friends = this.users.getAdjVertices(startPoint);
