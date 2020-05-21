@@ -64,6 +64,13 @@ public class Manager {
         users.addVertex(m);
     }
 
+    public void setPicture(String name, File file){
+        if(pictures.containsKey(name)){
+            //pictures.get(name).setImage();
+        }
+
+    }
+
     public ImageIcon getPicture(String name){
         ImageIcon pic = new ImageIcon("logo.png");
         if(pictures.containsKey(name)) {

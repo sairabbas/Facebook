@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -425,16 +426,18 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                m.setName(nameTextField.getText());
-                m.setStatus(statusTextField.getText());
-                m.setImage(fileChooser.getSelectedFile());
+                //m.setName(nameTextField.getText());
+                //m.setStatus(statusTextField.getText());
+
                 if(!nameTextField.getText().isEmpty())
                     m.setName(nameTextField.getText());
                 if(!statusTextField.getText().isEmpty())
                     m.setStatus(statusTextField.getText());
+                m.setImage(new File(String.valueOf(fileChooser.getSelectedFile())));
+                    //manager.searchProfile(m.getName()).setImage(fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
                 Dashboard(m);
-                frame.getContentPane().removeAll();
+                //frame.getContentPane().removeAll();
                 frame.getContentPane().add(dashboard);
                 frame.setVisible(true);
             }
