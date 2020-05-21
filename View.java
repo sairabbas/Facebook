@@ -26,8 +26,6 @@ public class View implements Observer
     public View()
     {
         Home();
-        Create();
-
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
@@ -214,7 +212,6 @@ public class View implements Observer
                     Dashboard(currentUser);
                     frame.getContentPane().removeAll();
                     frame.getContentPane().add(dashboard);
-                    frame.pack();
                     frame.setVisible(true);
                 }
             }
@@ -415,14 +412,6 @@ public class View implements Observer
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setBounds(290, 121, 300, 275);
-        fileChooser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                m.setImage(m.getImage());
-                Dashboard(m);
-            }
-        });
         edit.add(fileChooser);
 
         JButton applyButton = new JButton("Apply Changes");
@@ -432,8 +421,11 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                frame.getContentPane().removeAll();
+                m.setName(nameTextField.getText());
+                m.setStatus(statusTextField.getText());
+                m.setImage(fileChooser.getSelectedFile());
                 Dashboard(m);
+                frame.getContentPane().removeAll();
                 frame.getContentPane().add(dashboard);
                 frame.setVisible(true);
             }

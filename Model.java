@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.io.File;
 import java.util.Observable;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Observable;
 public class Model extends Observable
 {
     private String name, status, password;
-    private ImageIcon image;
+    private File image;
 
     public Model(){
         name = ""; status = ""; password = "";
@@ -23,8 +24,8 @@ public class Model extends Observable
     public void setPassword(String password) { this.password = password; }
     public String getPassword() { return password; }
 
-    public void setImage(ImageIcon image) { this.image = image; }
-    public ImageIcon getImage() { return image; }
+    public void setImage(File image) { this.image = image; }
+    public File getImage() { return image; }
 
     public void update(Observable o, Object arg)
     {
