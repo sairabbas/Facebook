@@ -33,18 +33,7 @@ public class View implements Observer
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-<<<<<<< HEAD
-        frame.add(dashboard);
-=======
-
         frame.add(home);
-
-<<<<<<< HEAD
-        //frame.add(edit);
->>>>>>> c22497879276717d4339845d62b17eaf656b091d
-        //frame.pack();
-=======
->>>>>>> 72518089f8478f646465254985eb9ea86455e534
         frame.setVisible(true);
     }
 
@@ -412,42 +401,26 @@ public class View implements Observer
         nameTextField.setBounds(283,50,165,25);
         edit.add(nameTextField);
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(218,90,80,25);
-        edit.add(passwordLabel);
-
-        JTextField passwordTextField = new JTextField(10);
-        passwordTextField.setBounds(283,90,165,25);
-        edit.add(passwordTextField);
-
         JLabel statusLabel = new JLabel("Status:");
-        statusLabel.setBounds(238,130,90,25);
+        statusLabel.setBounds(238,90,90,25);
         edit.add(statusLabel);
 
         JTextField statusTextField = new JTextField(10);
-        statusTextField.setBounds(283, 130, 165, 25);
+        statusTextField.setBounds(283, 90, 165, 25);
         edit.add(statusTextField);
 
         JLabel imageLabel = new JLabel("Select Profile Image:");
-        imageLabel.setBounds(153, 170, 127, 25);
+        imageLabel.setBounds(153, 130, 127, 25);
         edit.add(imageLabel);
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setBounds(290, 161, 300, 275);
-<<<<<<< HEAD
-        fileChooser.addActionListener(new ActionListener()
-        {
+        fileChooser.setBounds(290, 121, 300, 275);
+        fileChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
-=======
-        fileChooser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
                 m.setImage(m.getImage());
                 Dashboard(m);
->>>>>>> c22497879276717d4339845d62b17eaf656b091d
             }
         });
         edit.add(fileChooser);
@@ -459,11 +432,6 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //model.setName(nameTextField.getText());
-                //model.setPassword(passwordTextField.getText());
-                manager.addAccount(nameTextField.getText(),
-                        passwordTextField.getText(),
-                        fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
                 Dashboard(m);
                 frame.getContentPane().add(dashboard);
