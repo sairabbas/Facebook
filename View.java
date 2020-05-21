@@ -350,6 +350,7 @@ public class View implements Observer
             StringBuilder friends = new StringBuilder();
             for(Model m: manager.getFriendList(user))
             {
+
                 friends.append(m.getName()).append(", ");
             }
             JLabel friendsLabel = new JLabel();
@@ -374,6 +375,7 @@ public class View implements Observer
                 public void actionPerformed(ActionEvent e)
                 {
                     manager.createFriendship(user, otherUsers.get(finalI));
+                    Dashboard(manager.searchProfile(name)); //refreshes Dashboard with new info
                     System.out.println(user.getName() +" added " + otherUsers.get(finalI).getName());
                 }
             });
@@ -443,9 +445,11 @@ public class View implements Observer
             {
                 //model.setName(nameTextField.getText());
                 //model.setPassword(passwordTextField.getText());
-                manager.addAccount(nameTextField.getText(),
-                        passwordTextField.getText(),
-                        fileChooser.getSelectedFile());
+                m.setName(nameTextField.getText());
+                m.setStatus(statusTextField.getText());
+                //manager.addAccount(nameTextField.getText(),
+                  //      passwordTextField.getText(),
+                    //    fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
                 Dashboard(m);
                 frame.getContentPane().add(dashboard);
