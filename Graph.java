@@ -2,6 +2,8 @@ import java.util.*;
 
 public class Graph {
      Map<Model, ArrayList<Model>> map = new HashMap<>();
+     ArrayList<Model> modelList = new ArrayList<>();
+    // Manager manager = new Manager();
 
     public Graph(){ }
 
@@ -48,6 +50,27 @@ public class Graph {
     {
         return map.get(p);
     }
+
+
+    /*
+    public String getAdjacencyList(){
+        String test;
+        String arrow = "->";
+        String total = "";
+        for(Model model: modelList){
+            test = model.getName();
+            for(String name:  model.getFriendsList()){
+                test += arrow + name;
+            }
+            test +=  arrow + "NULL";
+            total += test + "\n";
+        }
+        return total;
+    }
+
+     */
+
+
 
 
     public int getVertexCount(){

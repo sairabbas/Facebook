@@ -14,12 +14,14 @@ import java.util.Set;
 public class Manager {
     //Holds all of profiles
     private Graph users;
+    private ArrayList<Model> userLists;
     private ArrayList<Model> friends;
     private HashMap<String, String> accounts;
     private HashMap<String, ImageIcon> pictures;
 
     public Manager(){
         users = new Graph();
+        userLists = new ArrayList<>();
         friends = new ArrayList<>();
         accounts = new HashMap<>();
         pictures = new HashMap<>();
@@ -40,8 +42,9 @@ public class Manager {
             m.setName(name);
             m.setStatus(status);
             m.setImage(new File(String.valueOf(file)));
-            users.addVertex(m);
-            pictures.put(name, new ImageIcon(String.valueOf(file)));
+            users.addVertex(m); //Adds user to tree
+            userLists.add(m); //Adds user to list of users
+            pictures.put(name, new ImageIcon(String.valueOf(file))); //Adds picture to map
     }
     /**
      * @param name the username
@@ -60,16 +63,8 @@ public class Manager {
         return flag;
     }
 
-
     public void addProfile(Model m){
         users.addVertex(m);
-    }
-
-    public Set<Model> getMutualFriends(Model root){
-        Set<Model> mutuals;
-        mutuals = users.bfs(users, root);
-
-        return mutuals;
     }
 
     public void setUsername(Model m, String name){
@@ -150,6 +145,38 @@ public class Manager {
         friends = this.users.getAdjVertices(startPoint);
         return friends;
     }
+
+
+    public String getAdjacencyList(Model m){
+        StringBuilder test;
+        String arrow = "->";
+        String mutualUser = m.getName();
+        /*
+        for(Model model: getAllUsers(mutualUser)){ //Gets all of the users
+            test = new StringBuilder(model.getName());
+            System.out.println("Current User is " + test);
+            for(String name:  model.getFriendsList()){
+                System.out.println(test + " friends with " + name);
+                if(mutualUser.equals(name))
+                    test.append(arrow).append(name);
+            }
+            test.append(arrow).append("NULL");
+            total.append(test).append(" ");
+        }
+         */
+        for(int i = 0; i < users.getAllVertices().size(); i++)
+        {
+
+        }
+        System.out.println(users.getAllVertices().size());
+        return "";
+
+    }
+
+    public String getMutualFriends(Model m){
+        return getAdjacencyList(m);
+    }
+
 
 
 }

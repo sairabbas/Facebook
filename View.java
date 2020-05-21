@@ -323,10 +323,83 @@ public class View implements Observer
         c.gridx = 1;
         c.gridy = 0;
         c.insets = new Insets(10,10,0,10);
-        dashboard.add(new JTextField(12), c);
+        JTextField searchTextField = new JTextField(12);
+        dashboard.add(searchTextField, c);
         c.insets = new Insets(35,10,0,10);
-        dashboard.add(new JButton("Search Name"), c);
+        JButton search = new JButton("Search Name");
+        //Displays a message box with option buttons
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = searchTextField.getText();
+                Model friend = manager.searchProfile(name);
 
+                JButton[] buttons = {
+                        new JButton("+ Add Friend"),
+                        new JButton("Search Again"),
+                        new JButton("Cancel")
+                };
+                //Add Friend Button
+                buttons[0].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        manager.createFriendship(user, friend);
+                        System.out.println(user.getName()
+                                + " is now friends with "
+                                + friend.getName());
+                        //Redirects to Dashboard After adding friend
+                        frame.getContentPane().removeAll();
+                        Dashboard(user);
+                        frame.getContentPane().add(dashboard);
+                        frame.getContentPane().revalidate();
+                    }
+                });
+                //Goes back to Dashboard
+                buttons[1].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        frame.getContentPane().removeAll();
+                        Dashboard(user);
+                        frame.getContentPane().add(dashboard);
+                        frame.getContentPane().revalidate();
+                    }
+                });
+                //Goes back to Dashboard too
+                buttons[2].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        frame.getContentPane().removeAll();
+                        Dashboard(user);
+                        frame.getContentPane().add(dashboard);
+                        frame.getContentPane().revalidate();
+                    }
+                });
+                int searchResult = JOptionPane.showOptionDialog(null,
+                        "Name: " + friend.getName() + "\n"
+                        + "Status: " + friend.getStatus() + "\n"
+                        + "Mutual Friends with: " +  manager.getMutualFriends(user),
+                        "Profile Search",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        buttons,
+                        buttons[2]);
+                switch (searchResult){
+                    case 0:
+                        System.out.println("Add button pressed!");
+                        break;
+
+                    case 1:
+                        System.out.println("Returning to Dashboard..");
+                        break;
+                    case 2:
+                        System.out.println("Cancel MessageDialog");
+                        break;
+                }
+            }
+        });
+
+        dashboard.add(search, c);
 
         //Feed
         int topImage = 73;
@@ -334,8 +407,10 @@ public class View implements Observer
         int topAdd = 105;
         c.insets = new Insets(topImage,10,0,10);
         for (int i = 0; i < manager.getAllUsers(name).size(); i++) //Displays other users
-        {
+         {
             ArrayList<Model> otherUsers = manager.getAllUsers(name);
+            String mutuals = manager.getMutualFriends(user);
+
             JLabel image1 = new JLabel();
             image1.setBounds(0,0,95,95);
             ImageIcon logo1 = new ImageIcon(String.valueOf(manager.getPicture(otherUsers.get(i).getName())));
@@ -347,20 +422,10 @@ public class View implements Observer
             dashboard.add(image1, c);
             JLabel nameLabel = new JLabel("Name: " + manager.getAllUsers(name).get(i).getName());
             JLabel statusLabel = new JLabel("Status: " + manager.getAllUsers(name).get(i).getStatus());
-            StringBuilder mutualfriends = new StringBuilder();
-            int count = 0;
-            Model u = otherUsers.get(i);
-
-            for(Model m: manager.getFriendList(user))
-            {
-                if(!m.equals(u) && user.getName().equals(u.getName()))
-                    mutualfriends.append(m.getName()).append(" | ");
-            }
-
 
             JLabel friendsLabel = new JLabel();
             if(!manager.getFriendList(user).isEmpty()){
-                friendsLabel = new JLabel("Mutual Friends with: " + mutualfriends);
+                friendsLabel = new JLabel("Mutual Friends with: " + mutuals);
             }
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(nameLabel, c);
@@ -494,10 +559,13 @@ public class View implements Observer
         Model josh = manager.searchProfile("josh");
         Model alexis = manager.searchProfile("alexis");
 
+        //Sair's mutual friends in Daniel's POV would be : Josh
+        //Josh's mutual friends in Sair's POV would be : Daniel
         manager.createFriendship(daniel, sair);
         manager.createFriendship(daniel, josh);
         manager.createFriendship(sair, josh);
         manager.createFriendship(josh, alexis);
 
     }
+
 }
