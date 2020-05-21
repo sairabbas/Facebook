@@ -34,7 +34,7 @@ public class View implements Observer
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(edit);
+        frame.add(dashboard);
         //frame.pack();
         frame.setVisible(true);
     }
@@ -405,6 +405,14 @@ public class View implements Observer
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setBounds(290, 161, 300, 275);
+        fileChooser.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+            }
+        });
         edit.add(fileChooser);
 
         JButton applyButton = new JButton("Apply Changes");
