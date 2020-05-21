@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,26 +27,25 @@ public class View implements Observer
     {
         Home();
         Create();
-        Login();
-<<<<<<< HEAD
+
         //Dashboard(model);
-=======
+
         Edit();
         Dashboard(new Model());
->>>>>>> a20df7df271ceacf80de308c90c93e081ce38cde
+
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-<<<<<<< HEAD
+
         //frame.add(dashboard);
         frame.add(home);
         //frame.pack();
-=======
-        frame.add(dashboard);
-        frame.pack();
->>>>>>> a20df7df271ceacf80de308c90c93e081ce38cde
+
+        //frame.add(dashboard);
+        //frame.pack();
+
         frame.setVisible(true);
     }
 
@@ -150,8 +150,6 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //model.setName(nameTextField.getText());
-                //model.setPassword(passwordTextField.getText());
                 manager.addAccount(nameTextField.getText(),
                         passwordTextField.getText(),
                         fileChooser.getSelectedFile());
@@ -215,7 +213,8 @@ public class View implements Observer
                 String name = nameTextField.getText();
                 if(manager.login(name, passwordTextField.getText()))
                 {
-                    Model currentUser = manager.searchProfile(name);
+                    Model currentUser = new Model();
+                    currentUser = manager.searchProfile(name);
                     Dashboard(currentUser);
                     frame.getContentPane().removeAll();
                     frame.getContentPane().add(dashboard);
@@ -277,17 +276,17 @@ public class View implements Observer
         //Name
         c.insets = new Insets(225,10,0,10);
         //dashboard.add(new JLabel("Name: Sair Abbas"), c);
-        dashboard.add(new JLabel(name), c);
+        dashboard.add(new JLabel("Name: " + name), c);
 
         //Status
         c.insets = new Insets(250,10,0,10);
-        dashboard.add(new JLabel(status), c);
+        dashboard.add(new JLabel("Status: " + status), c);
 
         //Friends
         c.insets = new Insets(275,10,0,10);
 
-        dashboard.add(new JLabel("Total Friends: "
-                + manager.getFriendList(user).size()), c);
+        //dashboard.add(new JLabel("Total Friends: "
+         //       + manager.getFriendList(user).size()), c);
 
         dashboard.add(new JLabel("Friends: Daniel Tran"), c);
 
@@ -337,8 +336,9 @@ public class View implements Observer
         int topInfo = 92;
         int topAdd = 105;
         c.insets = new Insets(topImage,10,0,10);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < manager.getAllUsers(name).size(); i++)
         {
+            ArrayList<Model> otherUsers = manager.getAllUsers(name);
             JLabel image1 = new JLabel();
             image1.setBounds(0,0,95,95);
             ImageIcon logo1 = new ImageIcon("logo.jpg");
@@ -347,9 +347,17 @@ public class View implements Observer
             ImageIcon sizedImage1 = new ImageIcon(sized1);
             image1.setIcon(sizedImage1);
             dashboard.add(image1, c);
-            JLabel nameLabel = new JLabel("Name: Daniel Tran");
-            JLabel statusLabel = new JLabel("Status: Online");
-            JLabel friendsLabel = new JLabel("Friends: Sair Abbas");
+            JLabel nameLabel = new JLabel("Name: " + manager.getAllUsers(name).get(i).getName());
+            JLabel statusLabel = new JLabel("Status: " + manager.getAllUsers(name).get(i).getStatus());
+            StringBuilder friends = new StringBuilder();
+            for(Model m: manager.getFriendList(user))
+            {
+                friends.append(m.getName()).append(", ");
+            }
+            JLabel friendsLabel = new JLabel();
+            if(!manager.getFriendList(user).isEmpty()){
+                friendsLabel = new JLabel("Friends with " + friends);
+            }
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(nameLabel, c);
             topInfo = topInfo + 20;

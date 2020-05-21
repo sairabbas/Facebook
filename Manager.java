@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**Class holds a graph full of Model objects (users).
  * Holds accounts and their profile pics.
@@ -34,6 +35,9 @@ public class Manager {
         else
             System.out.println("Name: " + name + " is registered.");
             accounts.put(name, password);
+            Model m = new Model();
+            m.setName(name);
+            users.addVertex(m);
             pictures.put(name, new ImageIcon(String.valueOf(file)));
     }
     /**
@@ -84,9 +88,22 @@ public class Manager {
         return users.getVertexCount();
     }
 
+    public ArrayList<Model> getAllUsers(String name){
+        ArrayList<Model> allUsers = new ArrayList<>();
+        for(Model u: users.getAllVertices())
+        {
+            if(!u.getName().equals(name)) //make sure it does not get our own name
+                allUsers.add(u);
+        }
+        return allUsers;
+    }
+
     public Model searchProfile(String name){
         Model v = new Model();
 
+        if(users.getAllVertices().isEmpty()){
+            System.out.println("User not found in Database Manager.");
+        }
         for(Model u : users.getAllVertices()){
             if(u.getName().equals(name)){
                 System.out.println("User " + name +" found!");
@@ -94,7 +111,6 @@ public class Manager {
             }
             System.out.println(u.getName());
         }
-        System.out.println("User not found in Database Manager.");
         return v;
     }
 
@@ -112,8 +128,8 @@ public class Manager {
     public Iterable<Database> getFriendList(Database startPoint) {
         return this.allProfiles.getNeighbors(startPoint);
     }
-
      */
+
     public ArrayList<Model> getFriendList(Model startPoint) {
         friends = this.users.getAdjVertices(startPoint);
         return friends;
