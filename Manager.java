@@ -66,7 +66,7 @@ public class Manager {
 
     public void setPicture(String name, File file){
         if(pictures.containsKey(name)){
-            //pictures.get(name).setImage();
+            pictures.replace(name, new ImageIcon(String.valueOf(file)));
         }
 
     }

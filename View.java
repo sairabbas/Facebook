@@ -433,7 +433,7 @@ public class View implements Observer
                     m.setName(nameTextField.getText());
                 if(!statusTextField.getText().isEmpty())
                     m.setStatus(statusTextField.getText());
-                m.setImage(new File(String.valueOf(fileChooser.getSelectedFile())));
+                manager.setPicture(m.getName(), fileChooser.getSelectedFile());
                     //manager.searchProfile(m.getName()).setImage(fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
                 Dashboard(m);
