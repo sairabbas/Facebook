@@ -146,6 +146,7 @@ public class View implements Observer
             {
                 manager.addAccount(nameTextField.getText(),
                         passwordTextField.getText(),
+                        statusTextField.getText(),
                         fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
                 Login();
@@ -343,9 +344,14 @@ public class View implements Observer
             JLabel nameLabel = new JLabel("Name: " + manager.getAllUsers(name).get(i).getName());
             JLabel statusLabel = new JLabel("Status: " + manager.getAllUsers(name).get(i).getStatus());
             StringBuilder friends = new StringBuilder();
+            int count = 0;
             for(Model m: manager.getFriendList(user))
             {
-                friends.append(m.getName()).append(", ");
+                if(count == 0 || count == manager.getFriendList(user).size())
+                    friends.append(m.getName()).append(" ");
+                else
+                    friends.append(m.getName()).append(", ");
+                count++;
             }
             JLabel friendsLabel = new JLabel();
             if(!manager.getFriendList(user).isEmpty()){
@@ -369,6 +375,8 @@ public class View implements Observer
                 public void actionPerformed(ActionEvent e)
                 {
                     manager.createFriendship(user, otherUsers.get(finalI));
+                    dashboard.revalidate();
+                    Dashboard(manager.searchProfile(name)); //refreshes Dashboard with new info
                     System.out.println(user.getName() +" added " + otherUsers.get(finalI).getName());
                 }
             });
@@ -424,6 +432,11 @@ public class View implements Observer
                 m.setName(nameTextField.getText());
                 m.setStatus(statusTextField.getText());
                 m.setImage(fileChooser.getSelectedFile());
+                if(!nameTextField.getText().isEmpty())
+                    m.setName(nameTextField.getText());
+                if(!statusTextField.getText().isEmpty())
+                    m.setStatus(statusTextField.getText());
+                frame.getContentPane().removeAll();
                 Dashboard(m);
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(dashboard);
