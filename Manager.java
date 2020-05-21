@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**Class holds a graph full of Model objects (users).
  * Holds accounts and their profile pics.
@@ -34,6 +35,9 @@ public class Manager {
         else
             System.out.println("Name: " + name + " is registered.");
             accounts.put(name, password);
+            Model m = new Model();
+            m.setName(name);
+            users.addVertex(m);
             pictures.put(name, new ImageIcon(String.valueOf(file)));
     }
     /**
@@ -45,7 +49,7 @@ public class Manager {
     public boolean login(String name, String password){
         boolean flag = false;
         if(accounts.containsKey(name) && accounts.get(name).equals(password))
-            flag = true; //The username/pass exists and matches
+            flag = true; //The username/pass existand matches
         else if(!accounts.containsKey(name))
             System.out.println("Invalid username.");
         else if(!accounts.containsValue(password))
@@ -84,17 +88,32 @@ public class Manager {
         return users.getVertexCount();
     }
 
+    public ArrayList<Model> getAllUsers(String name){
+        ArrayList<Model> allUsers = new ArrayList<>();
+        for(Model u: users.getAllVertices())
+        {
+            if(!u.getName().equals(name)) //make sure it does not get our own name
+                allUsers.add(u);
+        }
+        return allUsers;
+    }
+
+    public boolean isFriends(Model user, Model otherUser){
+        return users.isConnected(user, otherUser);
+    }
     public Model searchProfile(String name){
         Model v = new Model();
 
+        if(users.getAllVertices().isEmpty()){
+            System.out.println("User not found in Database Manager.");
+        }
         for(Model u : users.getAllVertices()){
             if(u.getName().equals(name)){
                 System.out.println("User " + name +" found!");
-                System.out.println("Status: " + u.getStatus());
                 return u;
             }
+            System.out.println(u.getName());
         }
-        System.out.println("User not found in Database Manager.");
         return v;
     }
 
@@ -112,8 +131,8 @@ public class Manager {
     public Iterable<Database> getFriendList(Database startPoint) {
         return this.allProfiles.getNeighbors(startPoint);
     }
-
      */
+
     public ArrayList<Model> getFriendList(Model startPoint) {
         friends = this.users.getAdjVertices(startPoint);
         return friends;
