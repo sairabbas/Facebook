@@ -28,11 +28,6 @@ public class View implements Observer
         Home();
         Create();
 
-        //Dashboard(model);
-
-        //Edit();
-        //Dashboard(new Model());
-
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
@@ -42,16 +37,14 @@ public class View implements Observer
         frame.add(dashboard);
 =======
 
-        //frame.add(dashboard);
         frame.add(home);
-        //frame.pack();
 
-        //frame.add(dashboard);
-        //frame.pack();
-
+<<<<<<< HEAD
         //frame.add(edit);
 >>>>>>> c22497879276717d4339845d62b17eaf656b091d
         //frame.pack();
+=======
+>>>>>>> 72518089f8478f646465254985eb9ea86455e534
         frame.setVisible(true);
     }
 
