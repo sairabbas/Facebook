@@ -49,7 +49,7 @@ public class Manager {
     public boolean login(String name, String password){
         boolean flag = false;
         if(accounts.containsKey(name) && accounts.get(name).equals(password))
-            flag = true; //The username/pass exists and matches
+            flag = true; //The username/pass existand matches
         else if(!accounts.containsKey(name))
             System.out.println("Invalid username.");
         else if(!accounts.containsValue(password))
@@ -98,6 +98,9 @@ public class Manager {
         return allUsers;
     }
 
+    public boolean isFriends(Model user, Model otherUser){
+        return users.isConnected(user, otherUser);
+    }
     public Model searchProfile(String name){
         Model v = new Model();
 

@@ -30,15 +30,14 @@ public class View implements Observer
 
         //Dashboard(model);
 
-        Edit();
-        Dashboard(new Model());
+        //Edit();
+        //Dashboard(new Model());
 
         model.addObserver(this);
         frame = new JFrame();
         frame.setTitle("MockFB");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-<<<<<<< HEAD
 
         //frame.add(dashboard);
         frame.add(home);
@@ -47,10 +46,8 @@ public class View implements Observer
         //frame.add(dashboard);
         //frame.pack();
 
-=======
-        frame.add(edit);
+        //frame.add(edit);
         //frame.pack();
->>>>>>> 64ca6d6ae158db15f65c699089efe0a7ad4e785e
         frame.setVisible(true);
     }
 
@@ -301,7 +298,7 @@ public class View implements Observer
         //dashboard.add(new JLabel("Total Friends: "
          //       + manager.getFriendList(user).size()), c);
 
-        dashboard.add(new JLabel("Friends: Daniel Tran"), c);
+        dashboard.add(new JLabel("Total Friends: " + manager.getFriendList(user).size()), c);
 
         //Edit
         c.insets = new Insets(300,10,0,10);
@@ -312,7 +309,7 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Edit();
+                Edit(user);
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(edit);
                 frame.setVisible(true);
@@ -380,12 +377,16 @@ public class View implements Observer
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(friendsLabel, c);
             JButton addButton = new JButton("+ Add Friend");
+            if(manager.isFriends(user, otherUsers.get(i)))
+                addButton.setEnabled(false);
+            int finalI = i;
             addButton.addActionListener(new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-
+                    manager.createFriendship(user, otherUsers.get(finalI));
+                    System.out.println(user.getName() +" added " + otherUsers.get(finalI).getName());
                 }
             });
             c.insets = new Insets(topAdd ,260,0,10);
@@ -397,7 +398,7 @@ public class View implements Observer
         }
     }
     //Edit profile application page
-    public void Edit()
+    public void Edit(Model m)
     {
         edit = new JPanel();
         edit.setLayout(null);
@@ -436,6 +437,13 @@ public class View implements Observer
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setBounds(290, 161, 300, 275);
+        fileChooser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                m.setImage(m.getImage());
+                Dashboard(m);
+            }
+        });
         edit.add(fileChooser);
 
         JButton applyButton = new JButton("Apply Changes");
@@ -451,7 +459,7 @@ public class View implements Observer
                         passwordTextField.getText(),
                         fileChooser.getSelectedFile());
                 frame.getContentPane().removeAll();
-                Dashboard(model);
+                Dashboard(m);
                 frame.getContentPane().add(dashboard);
                 frame.setVisible(true);
             }
