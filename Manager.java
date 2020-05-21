@@ -29,7 +29,7 @@ public class Manager {
      * @param password the password
      * Adds username/pw to map to store
      * */
-    public void addAccount(String name, String password, File file){
+    public void addAccount(String name, String password, String status, File file){
         if(accounts.containsKey(name))
             System.out.println("Username is already taken.");
         else
@@ -37,6 +37,8 @@ public class Manager {
             accounts.put(name, password);
             Model m = new Model();
             m.setName(name);
+            m.setStatus(status);
+            m.setImage(new ImageIcon(String.valueOf(file)));
             users.addVertex(m);
             pictures.put(name, new ImageIcon(String.valueOf(file)));
     }
