@@ -5,16 +5,17 @@ import java.util.Observable;
 
 /**
  * Model class has a inner class, Profile, that holds all of the users data.
+ * Holds friends list of user.
  * */
 public class Model extends Observable
 {
     private String name, status, password;
     private ImageIcon image;
-    //private ArrayList<String> friends;
+    private ArrayList<String> friends;
 
     public Model(){
         name = ""; status = ""; password = "";
-        //friends = new ArrayList<>();
+        friends = new ArrayList<>();
         image = null;
     }
 
@@ -30,18 +31,14 @@ public class Model extends Observable
     public void setImage(File image) { this.image = new ImageIcon(String.valueOf(image)); }
     public ImageIcon getImage() { return image; }
 
-    /*
+
     public void addFriends(String name){
         friends.add(name);
-        System.out.println("Added " + name);
     }
     public ArrayList<String> getFriendsList(){ return friends; }
     public boolean isFriendsWith(String name){
         return friends.contains(name);
     }
-
-     */
-
 
 
     public void update(Observable o, Object arg)

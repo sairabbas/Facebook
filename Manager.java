@@ -139,19 +139,17 @@ public class Manager {
 
     public void createFriendship(Model user, Model friend) {
         users.addEdge(user, friend);
-    }
-
-    public ArrayList<Model> getFriendList(Model startPoint) {
-        friends = this.users.getAdjVertices(startPoint);
-        return friends;
+        user.addFriends(friend.getName()); //Adds friend to user's list
+        friend.addFriends(user.getName());//Adds user to friends's list
     }
 
 
+/*
     public String getAdjacencyList(Model m){
         StringBuilder test;
         String arrow = "->";
+        String total = "";
         String mutualUser = m.getName();
-        /*
         for(Model model: getAllUsers(mutualUser)){ //Gets all of the users
             test = new StringBuilder(model.getName());
             System.out.println("Current User is " + test);
@@ -161,20 +159,43 @@ public class Manager {
                     test.append(arrow).append(name);
             }
             test.append(arrow).append("NULL");
-            total.append(test).append(" ");
+            total += test + " \n";
         }
-         */
-        for(int i = 0; i < users.getAllVertices().size(); i++)
-        {
+        return total;
+    }
 
+ */
+
+    public String getAdjacencyList(Model m){
+        String test = "";
+        String total = "";
+        String user = m.getName();
+        for(Model model: getAllUsers(user)){ //Gets all of the users
+            test = model.getName(); //Test = Sair
+
+            System.out.println(test +"'s Friends:");
+            for(String name:  model.getFriendsList()){
+                System.out.println(name);
+                if(m.isFriendsWith(test)
+                        && model.isFriendsWith(name) //
+                        && searchProfile(name).isFriendsWith(user)
+                        && !user.equals(name)
+                        && !test.equals(name))
+                    test = name;
+            }
+            System.out.println();
+            total += test + " | ";
         }
-        System.out.println(users.getAllVertices().size());
-        return "";
-
+        return total;
     }
 
     public String getMutualFriends(Model m){
         return getAdjacencyList(m);
+    }
+
+    public boolean isMutual(Model user, Model friend){
+        users.bfs(users, user); //Traverse thru graph starting from user
+        return false;
     }
 
 

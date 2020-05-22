@@ -146,6 +146,10 @@ public class View implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                if(fileChooser.getSelectedFile().getAbsolutePath().isEmpty())
+                {
+                    fileChooser.setSelectedFile(new File("logo.jpg"));
+                }
                 manager.addAccount(nameTextField.getText(),
                         passwordTextField.getText(),
                         statusTextField.getText(),
@@ -280,9 +284,9 @@ public class View implements Observer
         c.insets = new Insets(275,10,0,10);
 
         StringBuilder friends = new StringBuilder();
-        for(Model m: manager.getFriendList(user))
+        for(String n: user.getFriendsList())
         {
-            friends.append(m.getName()).append(" | ");
+            friends.append(n).append(" | ");
         }
         dashboard.add(new JLabel("Friends: " + friends), c);
 
@@ -374,10 +378,15 @@ public class View implements Observer
                         frame.getContentPane().revalidate();
                     }
                 });
+                String friends = "";
+                for(String s: friend.getFriendsList())
+                {
+                    friends += s + " | ";
+                }
                 int searchResult = JOptionPane.showOptionDialog(null,
                         "Name: " + friend.getName() + "\n"
                         + "Status: " + friend.getStatus() + "\n"
-                        + "Mutual Friends with: " +  manager.getMutualFriends(user),
+                        + "Friends with: " +  friends,
                         "Profile Search",
                         JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
@@ -406,27 +415,30 @@ public class View implements Observer
         int topInfo = 92;
         int topAdd = 105;
         c.insets = new Insets(topImage,10,0,10);
-        for (int i = 0; i < manager.getAllUsers(name).size(); i++) //Displays other users
-         {
-            ArrayList<Model> otherUsers = manager.getAllUsers(name);
-            String mutuals = manager.getMutualFriends(user);
+        //ArrayList<Model> otherUsers = manager.getAllUsers(name);
+        String mutualFriends = manager.getMutualFriends(user);
 
+        for(Model otherUser: manager.getAllUsers(name)){
             JLabel image1 = new JLabel();
             image1.setBounds(0,0,95,95);
-            ImageIcon logo1 = new ImageIcon(String.valueOf(manager.getPicture(otherUsers.get(i).getName())));
-
+            ImageIcon logo1 = new ImageIcon(String.valueOf(manager.getPicture(otherUser.getName())));
             Image img1 = logo1.getImage();
             Image sized1 = img1.getScaledInstance(image1.getWidth(),image1.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon sizedImage1 = new ImageIcon(sized1);
             image1.setIcon(sizedImage1);
-            dashboard.add(image1, c);
-            JLabel nameLabel = new JLabel("Name: " + manager.getAllUsers(name).get(i).getName());
-            JLabel statusLabel = new JLabel("Status: " + manager.getAllUsers(name).get(i).getStatus());
 
+            dashboard.add(image1, c);
+
+            JLabel nameLabel = new JLabel("Name: " + otherUser.getName());
+            JLabel statusLabel = new JLabel("Status: " + otherUser.getStatus());
             JLabel friendsLabel = new JLabel();
-            if(!manager.getFriendList(user).isEmpty()){
-                friendsLabel = new JLabel("Mutual Friends with: " + mutuals);
+            String friends1 = "";
+            for(String s: otherUser.getFriendsList())
+            {
+                friends1 += s + " | ";
             }
+            friendsLabel = new JLabel("Friends: " + friends1);
+
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(nameLabel, c);
             topInfo = topInfo + 20;
@@ -435,25 +447,26 @@ public class View implements Observer
             topInfo = topInfo + 20;
             c.insets = new Insets(topInfo ,125,0,10);
             dashboard.add(friendsLabel, c);
+
             JButton addButton = new JButton("+ Add Friend");
-            if(manager.isFriends(user, otherUsers.get(i)))
+            if(manager.isFriends(user, otherUser))
                 addButton.setEnabled(false);
-            int finalI = i;
             addButton.addActionListener(new ActionListener()
             {
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    manager.createFriendship(user, otherUsers.get(finalI));
+                    manager.createFriendship(user, otherUser);
                     frame.getContentPane().removeAll();
 
                     Dashboard(manager.searchProfile(name));
                     frame.getContentPane().add(dashboard);
                     frame.getContentPane().revalidate();
 
-                    System.out.println(user.getName() +" added " + otherUsers.get(finalI).getName());
+                    System.out.println(user.getName() +" added " + otherUser.getName());
                 }
             });
+
             c.insets = new Insets(topAdd ,260,0,10);
             dashboard.add(addButton, c);
             topImage = topImage + 100;
@@ -461,6 +474,8 @@ public class View implements Observer
             topInfo = topInfo + 61;
             topAdd = topAdd + 102;
         }
+
+
     }
     //Edit profile application page
     public void Edit(Model m)
